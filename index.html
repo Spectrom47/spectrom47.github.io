@@ -4,157 +4,133 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spectrom Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      min-height: 100vh;
-      color: #A1C299;
-      background: radial-gradient(circle at top left, #3A0CA3 0%, #1052a8 40%, #0B1E0B 100%);
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-size: cover;
+      font-family: 'Orbitron', sans-serif;
+      background: #000e06;
+      background: radial-gradient(circle at top left, #0f0f0f, #0c2b1f 40%, #06140b);
+      color: #A8FFBF;
       display: flex;
       flex-direction: column;
-    }
-    a {
-      color: #8FCB9B;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    a:hover {
-      color: #C1E1C1;
+      min-height: 100vh;
     }
     main {
-      flex: 1;
-      max-width: 900px;
       width: 100%;
-      margin: 60px auto 100px auto;
-      background: #102810cc;
-      border: 2px solid #4CAF50;
-      border-radius: 8px;
+      max-width: 1000px;
+      margin: auto;
       padding: 40px;
-      box-shadow: 0 0 20px #2E7D32;
+      background-color: rgba(10, 35, 20, 0.9);
+      border: 2px solid #33FF77;
+      border-radius: 12px;
+      box-shadow: 0 0 30px #00ff88;
     }
     h1 {
-      font-weight: 600;
-      font-size: 2.4rem;
-      color: #7BC67E;
-      text-shadow: 1px 1px 2px #004400;
+      font-size: 3rem;
       text-align: center;
-      margin-bottom: 30px;
-    }
-    .content-box {
-      background-color: #122A12;
-      border: 1px solid #4CAF50;
-      border-radius: 6px;
-      padding: 25px;
-      color: #C8E6C9;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+      color: #33FF77;
+      text-shadow: 0 0 8px #00ff88, 0 0 16px #005533;
       margin-bottom: 30px;
     }
     .profile-section {
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 20px;
-      margin-bottom: 30px;
+      background-color: #122f21;
+      border: 2px solid #33FF77;
+      border-radius: 10px;
       padding: 20px;
-      background-color: #133113;
-      border: 1px solid #4CAF50;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(76, 175, 80, 0.3);
+      box-shadow: 0 0 15px #00ff88;
+      margin-bottom: 30px;
     }
     .profile-icon {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
-      border: 2px solid #7BC67E;
+      border: 2px solid #33FF77;
+      box-shadow: 0 0 12px #00ff88;
       object-fit: cover;
-      box-shadow: 0 0 10px #2E7D32;
     }
     .email-box {
-      font-size: 1.1rem;
-      color: #C8E6C9;
+      font-size: 1.2rem;
     }
     .founder-highlight {
-      font-weight: 900;
-      font-size: 1.3rem;
-      color: #4CAF50;
-      text-shadow: 0 0 8px #2E7D32, 0 0 12px #2E7D32;
+      display: block;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #33FF77;
+      text-shadow: 0 0 8px #00ff88;
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #33FF77, #99FFDD, #A8FFBF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      animation: flicker 2.5s infinite;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .content-box {
+      background: #0f2618;
+      padding: 20px;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px #007744;
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+    .bullet span {
+      font-weight: bold;
       display: inline-block;
       margin-right: 6px;
     }
-    .gradient-text {
-      font-weight: 600;
-      background: linear-gradient(90deg, #C1E1C1, #4CAF50, #8BC6EC);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glowFade 3s ease-in-out infinite;
-    }
-    @keyframes glowFade {
-      0%, 100% {
-        text-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
-      }
-      50% {
-        text-shadow: 0 0 10px rgba(76, 175, 80, 0.5), 0 0 15px rgba(255, 255, 255, 0.2);
-      }
-    }
+    .python { color: #8FFFBC; }
+    .csharp { color: #A8C7FF; }
+    .cpp { color: #FFBFA8; }
+    .web { color: #FFF3A8; }
+    .roblox { color: #A8FFD8; }
     footer {
       position: fixed;
       bottom: 0;
-      left: 0;
       width: 100%;
-      background-color: rgba(11, 30, 11, 0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(10, 35, 20, 0.95);
       display: flex;
       justify-content: space-around;
       align-items: center;
       padding: 15px 10px;
-      border-top: 2px solid #4CAF50;
-      box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.4);
-      z-index: 1000;
-      flex-wrap: wrap;
+      border-top: 2px solid #33FF77;
+      box-shadow: 0 -2px 20px #00ff88;
+      z-index: 999;
     }
     footer a {
-      flex: 1;
+      color: #A8FFBF;
+      padding: 10px;
       text-align: center;
       min-width: 150px;
-      padding: 10px;
-      font-size: 1rem;
-      color: #A1C299;
-      transition: background 0.3s, color 0.3s;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
     footer a:hover {
-      background-color: #356635;
-      color: #d0f0c0;
-      border-radius: 4px;
+      background-color: #005533;
+      color: #ffffff;
+      border-radius: 5px;
     }
-    .bullet {
-      margin: 5px 0;
-    }
-    .bullet span {
-      font-weight: bold;
-    }
-    .python { color: #B0FFCE; }
-    .csharp { color: #A8C7FF; }
-    .cpp { color: #FFC0A8; }
-    .web { color: #FFE9A8; }
-    .roblox { color: #A8FFD8; }
   </style>
 </head>
 <body>
   <main>
     <h1>Welcome to Spectrom</h1>
-
     <div class="profile-section">
-      <img src="MyIcon.png" alt="Spectrom Profile Icon" class="profile-icon" />
+      <img src="MyIcon.png" alt="Spectrom Profile Icon" class="profile-icon">
       <div class="email-box">
         <span class="founder-highlight">📧 Founder</span>
         <span class="gradient-text">of Spectrom Clover Kingdom</span>
@@ -166,27 +142,26 @@
     </div>
 
     <div class="content-box">
-  <p class="bullet"><span class="web">🧠 My Content:</span> Software Developer | 10 Years | Front End Developer</p>
-  <p class="bullet"><span class="python">🐍 Python External Applications:</span> Certified | 8 Years | Mimo and Code Academy</p>
-  <p class="bullet"><span class="csharp">🧩 C# External Applications:</span> 41% Cert. | 3.1 Years | Mimo and Code Academy</p>
-  <p class="bullet"><span class="cpp">💠 C++ External Applications:</span> 17.2% Cert. | 2.6 Years | Mimo and Code Academy</p>
-  <p class="bullet"><span class="web">🌐 Website Developer:</span> 72% Cert. | 2.5 Years | Mimo and Code Academy</p>
-  <p class="bullet"><span class="roblox">🎮 Roblox | Scripting:</span> Journeyman Apprentice | 12 Years | Roblox Docs & DevKing</p>
-  <p class="bullet"><span class="roblox">🏗️ Roblox | Builder:</span> Journeyman Apprentice | 8.1 Years | Trained by: Kurffew / Symboria</p>
-</div>
+      <p class="bullet"><span class="web">🧠 My Content:</span> Software Developer | 10 Years | Front End Developer</p>
+      <p class="bullet"><span class="python">🐍 Python External Applications:</span> Certified | 8 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="csharp">🧩 C# External Applications:</span> 41% Cert. | 3.1 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="cpp">💠 C++ External Applications:</span> 17.2% Cert. | 2.6 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="web">🌐 Website Developer:</span> 72% Cert. | 2.5 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="roblox">🎮 Roblox | Scripting:</span> Journeyman Apprentice | 12 Years | Roblox Docs & DevKing</p>
+      <p class="bullet"><span class="roblox">🏗️ Roblox | Builder:</span> Journeyman Apprentice | 8.1 Years | Trained by: Kurffew / Symboria</p>
+    </div>
 
-<div class="content-box">
-  <p><strong>📊 Work Experience:</strong> 15 Years Experience | $1.7 Million Total Sales Tracked</p>
-</div>
+    <div class="content-box">
+      <p><strong>📊 Work Experience:</strong> 15 Years Experience | $1.7 Million Total Sales Tracked</p>
+    </div>
 
-<div class="content-box">
-  <p class="bullet"><span class="web">🛠️ Pro Sales Specialist:</span> Lowes | 3 Years | Commercial and Non-Commercial Sales</p>
-  <p class="bullet"><span class="python">🏬 Sales Specialist:</span> HomeDepot | 3.4 Years | Non-Commercial Sales</p>
-  <p class="bullet"><span class="csharp">🎧 Customer Lead:</span> HomeDepot | 1.8 Years | Customer Relations</p>
-  <p class="bullet"><span class="cpp">🚚 Amazon Team Lead:</span> 2.6 Years | 3rd Shift Night</p>
-  <p class="bullet"><span class="cpp">🧼 Crew Carwash:</span> 3.6 Years | 3rd Shift Night</p>
-</div>
-
+    <div class="content-box">
+      <p class="bullet"><span class="web">🛠️ Pro Sales Specialist:</span> Lowes | 3 Years | Commercial and Non-Commercial Sales</p>
+      <p class="bullet"><span class="python">🏬 Sales Specialist:</span> HomeDepot | 3.4 Years | Non-Commercial Sales</p>
+      <p class="bullet"><span class="csharp">🎧 Customer Lead:</span> HomeDepot | 1.8 Years | Customer Relations</p>
+      <p class="bullet"><span class="cpp">🚚 Amazon Team Lead:</span> 2.6 Years | 3rd Shift Night</p>
+      <p class="bullet"><span class="cpp">🧼 Crew Carwash:</span> 3.6 Years | 3rd Shift Night</p>
+    </div>
   </main>
 
   <footer>
