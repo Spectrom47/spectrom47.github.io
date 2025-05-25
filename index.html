@@ -2,128 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spectrom Photo Match</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spectrom Visual Guess</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
-    }
-    body {
       margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
       background-color: #0B1E0B;
       color: #A1C299;
-      font-family: 'Montserrat', sans-serif;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding: 20px;
     }
-    a {
+
+    header {
+      background-color: #142814;
+      border-bottom: 2px solid #4CAF50;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 128, 0, 0.2);
+    }
+
+    header h1 {
+      color: #7BC67E;
+      font-size: 1.8rem;
+      text-shadow: 1px 1px 2px #003300;
+    }
+
+    nav a {
+      margin-left: 20px;
       color: #8FCB9B;
       text-decoration: none;
-      transition: color 0.3s;
+      font-weight: 600;
     }
-    a:hover {
+
+    nav a:hover {
       color: #C1E1C1;
     }
+
     main {
       flex: 1;
-      max-width: 800px;
-      margin: 0 auto;
-      background: #102810;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background-color: #102810;
       border: 2px solid #4CAF50;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 0 15px #2E7D32;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 0 20px #2E7D32;
       text-align: center;
     }
-    h1 {
-      font-weight: 600;
-      font-size: 2rem;
-      color: #7BC67E;
-      text-shadow: 1px 1px 2px #004400;
-    }
-    img {
+
+    .container img {
       max-width: 100%;
-      height: auto;
       border: 2px solid #4CAF50;
-      border-radius: 4px;
+      border-radius: 8px;
       margin-bottom: 20px;
     }
+
     input[type="text"] {
-      font-size: 1.2rem;
-      padding: 10px;
-      width: 80%;
+      padding: 12px;
+      font-size: 1rem;
+      width: 70%;
       max-width: 400px;
-      margin-bottom: 20px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: 1px solid #4CAF50;
       background-color: #0B1E0B;
       color: #C8E6C9;
+      margin-bottom: 20px;
     }
+
     button {
+      padding: 12px 24px;
       font-size: 1rem;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
       background-color: #2E7D32;
       color: #C8E6C9;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
       margin-left: 10px;
     }
+
     button:hover {
       background-color: #66BB6A;
       color: #1B5E20;
     }
+
     #message {
-      margin-top: 20px;
-      font-size: 1.2rem;
+      margin-top: 15px;
+      font-size: 1.1rem;
       min-height: 1.4rem;
     }
+
     footer {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(69, 69, 69, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 12px 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(160, 160, 160, 0.2);
-      display: flex;
-      gap: 10px;
-      font-size: 0.9rem;
-      color: #ccc;
-      max-width: 100vw;
-      white-space: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      z-index: 999;
+      background-color: #0f1f0f;
+      padding: 20px;
+      text-align: center;
+      border-top: 2px solid #4CAF50;
     }
+
+    footer a {
+      color: #8FCB9B;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
     footer a:hover {
-      color: #d0f0c0;
-      background-color: #356635;
+      color: #D0F0C0;
+    }
+
+    @media (max-width: 600px) {
+      header, nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav a {
+        margin: 10px 0 0 0;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
+
+  <header>
     <h1>Spectrom Visual Guess</h1>
-    <img src="your-image-path.jpg" alt="Spectrom Clue Image" />
-    <div>
-      <input type="text" id="guessInput" placeholder="Type your guess here..." />
-      <button onclick="checkGuess()">Submit</button>
+    <nav>
+      <a href="https://discord.gg/75hRp5BhTW" target="_blank">Clover Kingdom</a>
+      <a href="https://medal.tv/u/Spectrom47" target="_blank">Highlights</a>
+      <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">Spotify</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <img src="your-image-path.jpg" alt="Spectrom Clue Image" />
+      <div>
+        <input type="text" id="guessInput" placeholder="Type your guess here..." />
+        <button onclick="checkGuess()">Submit</button>
+      </div>
+      <div id="message"></div>
     </div>
-    <div id="message"></div>
   </main>
+
   <footer>
-    <a href="https://discord.gg/75hRp5BhTW" target="_blank">Spectrom Clover Kingdom</a>
-    <span>•</span>
-    <a href="https://medal.tv/u/Spectrom47" target="_blank">Latest Highlights</a>
-    <span>•</span>
-    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">Spotify Playlist</a>
+    &copy; 2025 Spectrom | Powered by green-tech vibes & binary essence.
   </footer>
+
   <script>
     const correctAnswers = ["spectrom", "esk"];
 
@@ -141,5 +189,6 @@
       }
     }
   </script>
+
 </body>
 </html>
