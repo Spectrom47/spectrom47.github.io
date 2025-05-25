@@ -1,0 +1,130 @@
+body {
+    background: #b7c0c7 url('https://imgur.com/TQjNGjn') repeat;
+    font-family: Verdana, Arial, sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+#wrapper {
+    width: 900px;
+    margin: 40px auto;
+    background: #00b646;
+    border: 1px solid #1e2225;
+    border-radius: 8px;
+    box-shadow: 0 0 12px #888;
+    padding: 0 0 20px 0;
+    overflow: hidden;
+}
+header {
+    background: #3b4a5a;
+    color: #480ed1c5;
+    padding: 20px 30px;
+    border-bottom: 3px solid #7a8a99;
+}
+header h1 {
+    margin: 0;
+    font-size: 2.2em;
+    letter-spacing: 2px;
+}
+header p {
+    margin: 8px 0 0 0;
+    font-size: 1.1em;
+    color: #1362b1;
+}
+nav {
+    background: #899097;
+    border-bottom: 1px solid #b7c0c7;
+    padding: 0 30px;
+}
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+nav a {
+    text-decoration: none;
+    color: #3b4a5a;
+    font-weight: bold;
+    padding: 12px 0;
+    display: inline-block;
+}
+nav a:hover {
+    color: #1a2633;
+    text-decoration: underline;
+}
+main {
+    float: left;
+    width: 630px;
+    padding: 30px;
+}
+.forum-category {
+    margin-bottom: 28px;
+    border: 1px solid #d3dbe3;
+    border-radius: 6px;
+    background: #f7fafd;
+    box-shadow: 0 1px 2px #eee;
+}
+.forum-category h2 {
+    margin: 0;
+    padding: 12px 18px;
+    background: #e3e9ef;
+    color: #2a3a4a;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-bottom: 1px solid #d3dbe3;
+    user-select: none;
+}
+.forum-threads {
+    padding: 12px 18px;
+}
+.thread {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px dotted #c0c8d0;
+}
+.thread:last-child {
+    border-bottom: none;
+}
+.thread a {
+    color: #2a3a4a;
+    font-weight: bold;
+    text-decoration: none;
+}
+.thread a:hover {
+    text-decoration: underline;
+}
+.thread span {
+    color: #888;
+    font-size: 0.95em;
+    margin-left: 10px;
+}
+aside {
+    float: right;
+    width: 210px;
+    padding: 30px 20px 0 0;
+}
+.user-panel, .online-box {
+    background: #f7fafd;
+    border: 1px solid #d3dbe3;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 2px #eee;
+}
+.user-panel h3, .online-box h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.05em;
+    color: #3b4a5a;
+}
+footer {
+    clear: both;
+    background: #408055;
+    color: #3b4a5a;
+    text-align: center;
+    padding: 14px 0 0 0;
+    font-size: 0.95em;
+    border-top: 1px solid #146db1;
+    margin-top: 30px;
+}
