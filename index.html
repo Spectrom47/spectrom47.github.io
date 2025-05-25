@@ -57,8 +57,8 @@
       font-size: 1.1rem;
       line-height: 1.6;
       box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+      margin-bottom: 30px;
     }
-
     .profile-section {
       display: flex;
       align-items: center;
@@ -71,7 +71,6 @@
       border-radius: 8px;
       box-shadow: 0 0 12px rgba(76, 175, 80, 0.3);
     }
-
     .profile-icon {
       width: 80px;
       height: 80px;
@@ -80,12 +79,33 @@
       object-fit: cover;
       box-shadow: 0 0 10px #2E7D32;
     }
-
     .email-box {
       font-size: 1.1rem;
       color: #C8E6C9;
     }
-
+    .founder-highlight {
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: #4CAF50;
+      text-shadow: 0 0 8px #2E7D32, 0 0 12px #2E7D32;
+      display: inline-block;
+      margin-right: 6px;
+    }
+    .gradient-text {
+      font-weight: 600;
+      background: linear-gradient(90deg, #C1E1C1, #4CAF50, #8BC6EC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowFade 3s ease-in-out infinite;
+    }
+    @keyframes glowFade {
+      0%, 100% {
+        text-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+      }
+      50% {
+        text-shadow: 0 0 10px rgba(76, 175, 80, 0.5), 0 0 15px rgba(255, 255, 255, 0.2);
+      }
+    }
     footer {
       position: fixed;
       bottom: 0;
@@ -125,7 +145,8 @@
     <div class="profile-section">
       <img src="MyIcon.png" alt="Spectrom Profile Icon" class="profile-icon" />
       <div class="email-box">
-        📧 <strong>"Founder of (Spectrom Clover Kingdom)"</strong>
+        <span class="founder-highlight">📧 Founder</span>
+        <span class="gradient-text">of (Spectrom Clover Kingdom)</span>
       </div>
     </div>
 
@@ -135,10 +156,9 @@
 
     <div class="content-box">
       <p><strong>🌿 Welcome To My Domain: </strong> Version 1.0 - A New Beginning</p>
-    <div style="height: 300px;"></div>
-    <div style="padding-top: 30px;"></div>
-</div>
-
+      <div style="height: 300px;"></div>
+      <div style="padding-top: 30px;"></div>
+    </div>
   </main>
 
   <footer>
