@@ -2,267 +2,270 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Worm Game with Mobile Controls & Animated Footer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spectrom - Hangman</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
   <style>
-    body {
-      background-color: #111;
+    html, body {
+      margin: 0; padding: 0; min-height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #0d0d0d;
+      color: #caffca;
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #ccc;
-      gap: 20px;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
+      flex-direction: column;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-weight: 900;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #4ade80;
+      text-shadow: 0 0 8px #22c55e;
     }
 
     .game-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    canvas {
-      background-color: #1e1e1e;
-      box-shadow: 0 0 20px #0f0;
-      border: 2px solid #0f0;
-      margin-top: 20px;
-    }
-
-    #score {
-      margin-top: 15px;
-      font-size: 20px;
-      color: #0f0;
-      font-family: monospace;
-      user-select: text;
-    }
-
-    .footer-like {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #9ae6b4;
-      text-align: center;
       width: 100%;
-      background-color: #000;
-      padding: 10px 0;
+      max-width: 640px;
+      background-color: #121212;
+      border: 2px solid #22c55e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #22c55e88;
+      padding: 20px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    #wordDisplay {
+      font-size: 2rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    #letters {
       display: flex;
-      justify-content: center;
-      gap: 6px;
       flex-wrap: wrap;
-      user-select: text;
-    }
-
-    .footer-like a {
-      color: #9ae6b4;
-      text-decoration: none;
-      font-weight: 600;
-      transition: transform 0.2s ease;
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    .footer-like a:hover,
-    .footer-like a:active,
-    .footer-like a:focus {
-      transform: scale(1.2);
-    }
-
-    .text-gray-500 {
-      color: #6b7280;
-      user-select: none;
-      padding-top: 5px;
-    }
-
-    .controls {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      user-select: none;
-    }
-
-    .control-row {
-      display: flex;
+      gap: 8px;
       justify-content: center;
-      gap: 10px;
+      margin-bottom: 20px;
     }
 
-    button.control-btn {
-      width: 60px;
-      height: 60px;
-      background-color: #0f0;
+    .letter-btn {
+      background: #134e05;
+      border: 1.5px solid #22c55e;
+      border-radius: 4px;
+      width: 35px;
+      height: 40px;
+      color: #a6f4a6;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .letter-btn:disabled {
+      background-color: #044206;
+      color: #355335;
+      cursor: default;
+      border-color: #13390b;
+    }
+
+    #status {
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      min-height: 1.4rem;
+      margin-bottom: 15px;
+      color: #a6f4a6;
+    }
+
+    #hangman-figure {
+      font-family: monospace;
+      white-space: pre;
+      line-height: 1.2;
+      text-align: center;
+      color: #22c55e;
+      margin-bottom: 15px;
+      user-select: none;
+    }
+
+    button#restart-btn {
+      background-color: #22c55e;
       border: none;
-      border-radius: 50%;
-      font-weight: bold;
-      font-size: 18px;
-      color: #111;
-      box-shadow: 0 0 10px #0f0;
-      transition: transform 0.1s ease;
-      touch-action: manipulation;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #0d0d0d;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 0 auto;
     }
-
-    button.control-btn:active {
-      transform: scale(1.3);
-      box-shadow: 0 0 20px #0f0;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        flex-direction: column;
-        gap: 10px;
-      }
-      .controls {
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 280px;
-        justify-content: center;
-      }
-      button.control-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 16px;
-      }
+    button#restart-btn:hover {
+      background-color: #4ade80;
     }
   </style>
 </head>
 <body>
 
-  <div class="game-container">
-    <canvas id="game" width="400" height="400"></canvas>
-    <div id="score">Score: 0</div>
-    <div class="footer-like text-green-200">
-      <a href="https://discord.gg/75hRp5BhTW" target="_blank" rel="noopener noreferrer">Spectrom Clover Kingdom</a>
-      <span class="text-gray-500">•</span>
-      <a href="https://medal.tv/u/Spectrom47?invite=ur-MSwzQ3gsMjYyMDI0Mzc2" target="_blank" rel="noopener noreferrer">Latest Highlights</a>
-      <span class="text-gray-500">•</span>
-      <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0?si=3a19b619c792450b&pt=6768c2b209dfb4a2f6b2d80aedacc201" target="_blank" rel="noopener noreferrer">My Spotify Playlist</a>
-    </div>
-  </div>
+  <h1>Classic Hangman</h1>
 
-  <div class="controls" aria-label="Mobile Worm Game Controls">
-    <div class="control-row">
-      <button class="control-btn" aria-label="Up" id="btn-up">↑</button>
-    </div>
-    <div class="control-row">
-      <button class="control-btn" aria-label="Left" id="btn-left">←</button>
-      <button class="control-btn" aria-label="Down" id="btn-down">↓</button>
-      <button class="control-btn" aria-label="Right" id="btn-right">→</button>
-    </div>
+  <div class="game-container">
+    <div id="hangman-figure"></div>
+    <div id="wordDisplay"></div>
+    <div id="letters"></div>
+    <div id="status"></div>
+    <button id="restart-btn">Restart Game</button>
   </div>
 
   <script>
-    const canvas = document.getElementById('game');
-    const ctx = canvas.getContext('2d');
-    const box = 20;
-    let score = 0;
+    (() => {
+      const words = [
+        "spectrom", "javascript", "hangman", "roblox", "developer", 
+        "community", "programming", "opensource", "backend", "fastapi"
+      ];
 
-    let worm = [{ x: 9 * box, y: 10 * box }];
-    let direction = 'RIGHT';
+      let selectedWord = "";
+      let guessedLetters = new Set();
+      let wrongGuesses = 0;
+      const maxWrong = 6;
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-      else if (e.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-      else if (e.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
-      else if (e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
-    });
+      const hangmanStates = [
+        `
+        
+        
+        
+        
 
-    document.getElementById('btn-up').addEventListener('touchstart', () => {
-      if (direction !== 'DOWN') direction = 'UP';
-    });
-    document.getElementById('btn-down').addEventListener('touchstart', () => {
-      if (direction !== 'UP') direction = 'DOWN';
-    });
-    document.getElementById('btn-left').addEventListener('touchstart', () => {
-      if (direction !== 'RIGHT') direction = 'LEFT';
-    });
-    document.getElementById('btn-right').addEventListener('touchstart', () => {
-      if (direction !== 'LEFT') direction = 'RIGHT';
-    });
+        =========
+        `,
+        `
+        +
+        |
+        |
+        |
+        |
+        =========
+        `,
+        `
+        +---+
+        |
+        |
+        |
+        |
+        =========
+        `,
+        `
+        +---+
+        |   O
+        |
+        |
+        |
+        =========
+        `,
+        `
+        +---+
+        |   O
+        |   |
+        |
+        |
+        =========
+        `,
+        `
+        +---+
+        |   O
+        |  /|\\
+        |
+        |
+        =========
+        `,
+        `
+        +---+
+        |   O
+        |  /|\\
+        |  / \\
+        |
+        =========
+        `
+      ];
 
-    ['btn-up', 'btn-down', 'btn-left', 'btn-right'].forEach(id => {
-      document.getElementById(id).addEventListener('mousedown', () => {
-        const btn = document.getElementById(id);
-        btn.classList.add('pressed');
-      });
-      document.getElementById(id).addEventListener('mouseup', () => {
-        const btn = document.getElementById(id);
-        btn.classList.remove('pressed');
-      });
-      document.getElementById(id).addEventListener('click', () => {
-        switch (id) {
-          case 'btn-up':
-            if (direction !== 'DOWN') direction = 'UP';
-            break;
-          case 'btn-down':
-            if (direction !== 'UP') direction = 'DOWN';
-            break;
-          case 'btn-left':
-            if (direction !== 'RIGHT') direction = 'LEFT';
-            break;
-          case 'btn-right':
-            if (direction !== 'LEFT') direction = 'RIGHT';
-            break;
+      const wordDisplay = document.getElementById("wordDisplay");
+      const lettersDiv = document.getElementById("letters");
+      const statusDiv = document.getElementById("status");
+      const hangmanFigure = document.getElementById("hangman-figure");
+      const restartBtn = document.getElementById("restart-btn");
+
+      function setup() {
+        guessedLetters.clear();
+        wrongGuesses = 0;
+        selectedWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
+
+        statusDiv.textContent = "";
+        hangmanFigure.textContent = hangmanStates[0];
+
+        // Create letter buttons
+        lettersDiv.innerHTML = "";
+        for(let i=65; i<=90; i++) {
+          const letter = String.fromCharCode(i);
+          const btn = document.createElement("button");
+          btn.className = "letter-btn";
+          btn.textContent = letter;
+          btn.addEventListener("click", () => guessLetter(letter.toLowerCase(), btn));
+          lettersDiv.appendChild(btn);
         }
-      });
-    });
 
-    let food = {
-      x: Math.floor(Math.random() * 19) * box,
-      y: Math.floor(Math.random() * 19) * box,
-    };
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      worm.forEach((segment, i) => {
-        ctx.fillStyle = i === 0 ? '#0f0' : '#0a0';
-        ctx.fillRect(segment.x, segment.y, box, box);
-      });
-
-      ctx.fillStyle = '#f00';
-      ctx.fillRect(food.x, food.y, box, box);
-
-      let headX = worm[0].x;
-      let headY = worm[0].y;
-
-      if (direction === 'LEFT') headX -= box;
-      if (direction === 'RIGHT') headX += box;
-      if (direction === 'UP') headY -= box;
-      if (direction === 'DOWN') headY += box;
-
-      if (
-        headX < 0 ||
-        headX >= canvas.width ||
-        headY < 0 ||
-        headY >= canvas.height ||
-        worm.some((segment, index) => index !== 0 && segment.x === headX && segment.y === headY)
-      ) {
-        clearInterval(game);
-        alert('Game Over! Final Score: ' + score);
-        return;
+        updateWordDisplay();
       }
 
-      let newHead = { x: headX, y: headY };
-      worm.unshift(newHead);
+      function updateWordDisplay() {
+        let display = "";
+        let allGuessed = true;
 
-      if (headX === food.x && headY === food.y) {
-        score++;
-        document.getElementById('score').innerText = 'Score: ' + score;
-        food = {
-          x: Math.floor(Math.random() * 19) * box,
-          y: Math.floor(Math.random() * 19) * box,
-        };
-      } else {
-        worm.pop();
+        for (const ch of selectedWord) {
+          if (guessedLetters.has(ch)) {
+            display += ch.toUpperCase() + " ";
+          } else {
+            display += "_ ";
+            allGuessed = false;
+          }
+        }
+        wordDisplay.textContent = display.trim();
+
+        if (allGuessed) {
+          statusDiv.textContent = "🎉 You won! 🎉";
+          disableLetters();
+        }
       }
-    }
 
-    let game = setInterval(draw, 100);
+      function disableLetters() {
+        [...lettersDiv.children].forEach(btn => btn.disabled = true);
+      }
+
+      function guessLetter(letter, button) {
+        button.disabled = true;
+
+        if (selectedWord.includes(letter)) {
+          guessedLetters.add(letter);
+          updateWordDisplay();
+        } else {
+          wrongGuesses++;
+          hangmanFigure.textContent = hangmanStates[Math.min(wrongGuesses, maxWrong)];
+          if (wrongGuesses >= maxWrong) {
+            statusDiv.textContent = `💀 You lost! The word was "${selectedWord.toUpperCase()}"`;
+            disableLetters();
+          }
+        }
+      }
+
+      restartBtn.addEventListener("click", setup);
+
+      setup();
+    })();
   </script>
 
 </body>
