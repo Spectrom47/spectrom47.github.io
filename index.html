@@ -3,270 +3,344 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spectrom - Hangman</title>
+  <title>Spectrom Hangman</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    html, body {
-      margin: 0; padding: 0; min-height: 100%;
+    /* Reset */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background-color: #0B1E0B; /* Dark green Esk */
+      color: #A1C299; /* Light green text */
       font-family: 'Montserrat', sans-serif;
-      background-color: #0d0d0d;
-      color: #caffca;
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
-      padding: 2rem;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    a {
+      color: #8FCB9B;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: #C1E1C1;
+    }
+
+    /* Container for main content */
+    main {
+      flex: 1;
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      background: #102810;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 0 15px #2E7D32;
     }
 
     h1 {
-      font-weight: 900;
+      margin: 0 0 20px 0;
+      font-weight: 600;
       font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #4ade80;
-      text-shadow: 0 0 8px #22c55e;
+      text-align: center;
+      color: #7BC67E;
+      text-shadow: 1px 1px 2px #004400;
     }
 
-    .game-container {
-      width: 100%;
-      max-width: 640px;
-      background-color: #121212;
-      border: 2px solid #22c55e;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #22c55e88;
-      padding: 20px;
-      box-sizing: border-box;
+    /* Hangman styles */
+    #word {
+      font-size: 2rem;
+      letter-spacing: 6px;
+      text-align: center;
+      margin: 20px 0 40px 0;
       user-select: none;
-    }
-
-    #wordDisplay {
-      font-size: 2rem;
-      letter-spacing: 0.15em;
-      margin-bottom: 20px;
     }
 
     #letters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 20px;
+      text-align: center;
+      margin-bottom: 30px;
     }
 
-    .letter-btn {
-      background: #134e05;
-      border: 1.5px solid #22c55e;
-      border-radius: 4px;
-      width: 35px;
-      height: 40px;
-      color: #a6f4a6;
-      font-weight: 700;
+    #letters button {
+      background-color: #2E7D32;
+      border: 1px solid #4CAF50;
+      color: #C8E6C9;
+      font-weight: 600;
       font-size: 1.2rem;
+      margin: 4px;
+      padding: 10px 14px;
+      border-radius: 4px;
       cursor: pointer;
       user-select: none;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.3s;
     }
-
-    .letter-btn:disabled {
-      background-color: #044206;
-      color: #355335;
+    #letters button:hover:not(:disabled) {
+      background-color: #66BB6A;
+      color: #1B5E20;
+    }
+    #letters button:disabled {
+      background-color: #555;
+      color: #999;
       cursor: default;
-      border-color: #13390b;
     }
 
-    #status {
+    #message {
       text-align: center;
-      font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
+      margin-top: 20px;
       min-height: 1.4rem;
-      margin-bottom: 15px;
-      color: #a6f4a6;
-    }
-
-    #hangman-figure {
-      font-family: monospace;
-      white-space: pre;
-      line-height: 1.2;
-      text-align: center;
-      color: #22c55e;
-      margin-bottom: 15px;
       user-select: none;
     }
 
-    button#restart-btn {
-      background-color: #22c55e;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 16px;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #0d0d0d;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    /* Hangman drawing */
+    #hangmanCanvas {
       display: block;
-      margin: 0 auto;
+      margin: 0 auto 40px auto;
+      background: #081108;
+      border: 2px solid #4CAF50;
+      border-radius: 4px;
     }
-    button#restart-btn:hover {
-      background-color: #4ade80;
+
+    /* Footer like your original */
+    footer {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(69, 69, 69, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(160, 160, 160, 0.2);
+      display: flex;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #ccc;
+      max-width: 100vw;
+      white-space: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      user-select: none;
+      z-index: 999;
+    }
+    footer a {
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    footer a:hover {
+      color: #d0f0c0;
+      background-color: #356635;
+    }
+    footer span {
+      color: #666;
+      user-select: none;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 20px;
+        max-width: 95vw;
+      }
+      #letters button {
+        padding: 8px 10px;
+        font-size: 1rem;
+      }
+      footer {
+        font-size: 0.8rem;
+        padding: 8px 14px;
+        gap: 6px;
+      }
     }
   </style>
 </head>
 <body>
+  <main>
+    <h1>Hangman - Spectrom Classic</h1>
 
-  <h1>Classic Hangman</h1>
+    <canvas id="hangmanCanvas" width="200" height="250" aria-label="Hangman drawing"></canvas>
 
-  <div class="game-container">
-    <div id="hangman-figure"></div>
-    <div id="wordDisplay"></div>
-    <div id="letters"></div>
-    <div id="status"></div>
-    <button id="restart-btn">Restart Game</button>
-  </div>
+    <div id="word" aria-live="polite" aria-atomic="true">_ _ _ _ _</div>
+
+    <div id="letters" role="group" aria-label="Choose a letter"></div>
+
+    <div id="message" role="alert" aria-live="assertive"></div>
+  </main>
+
+  <footer>
+    <a href="https://discord.gg/75hRp5BhTW" target="_blank" rel="noopener noreferrer">Spectrom Clover Kingdom</a>
+    <span>•</span>
+    <a href="https://medal.tv/u/Spectrom47?invite=ur-MSwzQ3gsMjYyMDI0Mzc2" target="_blank" rel="noopener noreferrer">Latest Highlights</a>
+    <span>•</span>
+    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0?si=3a19b619c792450b&pt=6768c2b209dfb4a2f6b2d80aedacc201" target="_blank" rel="noopener noreferrer">My Spotify Playlist</a>
+  </footer>
 
   <script>
-    (() => {
-      const words = [
-        "spectrom", "javascript", "hangman", "roblox", "developer", 
-        "community", "programming", "opensource", "backend", "fastapi"
-      ];
+    // Hangman logic + canvas drawing
 
-      let selectedWord = "";
-      let guessedLetters = new Set();
-      let wrongGuesses = 0;
-      const maxWrong = 6;
+    const wordList = [
+      "spectrom", "developer", "community", "discord", "roblox", "pymongo",
+      "fastapi", "hangman", "classic", "esk", "green", "programming"
+    ];
 
-      const hangmanStates = [
-        `
-        
-        
-        
-        
+    let chosenWord = "";
+    let guessedLetters = [];
+    let mistakes = 0;
+    const maxMistakes = 6;
 
-        =========
-        `,
-        `
-        +
-        |
-        |
-        |
-        |
-        =========
-        `,
-        `
-        +---+
-        |
-        |
-        |
-        |
-        =========
-        `,
-        `
-        +---+
-        |   O
-        |
-        |
-        |
-        =========
-        `,
-        `
-        +---+
-        |   O
-        |   |
-        |
-        |
-        =========
-        `,
-        `
-        +---+
-        |   O
-        |  /|\\
-        |
-        |
-        =========
-        `,
-        `
-        +---+
-        |   O
-        |  /|\\
-        |  / \\
-        |
-        =========
-        `
-      ];
+    const wordDiv = document.getElementById("word");
+    const lettersDiv = document.getElementById("letters");
+    const messageDiv = document.getElementById("message");
+    const canvas = document.getElementById("hangmanCanvas");
+    const ctx = canvas.getContext("2d");
 
-      const wordDisplay = document.getElementById("wordDisplay");
-      const lettersDiv = document.getElementById("letters");
-      const statusDiv = document.getElementById("status");
-      const hangmanFigure = document.getElementById("hangman-figure");
-      const restartBtn = document.getElementById("restart-btn");
+    function pickWord() {
+      const idx = Math.floor(Math.random() * wordList.length);
+      chosenWord = wordList[idx].toUpperCase();
+    }
 
-      function setup() {
-        guessedLetters.clear();
-        wrongGuesses = 0;
-        selectedWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
+    function drawHangman() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "#4CAF50";
+      ctx.lineWidth = 4;
 
-        statusDiv.textContent = "";
-        hangmanFigure.textContent = hangmanStates[0];
-
-        // Create letter buttons
-        lettersDiv.innerHTML = "";
-        for(let i=65; i<=90; i++) {
-          const letter = String.fromCharCode(i);
-          const btn = document.createElement("button");
-          btn.className = "letter-btn";
-          btn.textContent = letter;
-          btn.addEventListener("click", () => guessLetter(letter.toLowerCase(), btn));
-          lettersDiv.appendChild(btn);
-        }
-
-        updateWordDisplay();
+      // Base
+      if (mistakes > 0) {
+        ctx.beginPath();
+        ctx.moveTo(10, 240);
+        ctx.lineTo(190, 240);
+        ctx.stroke();
       }
-
-      function updateWordDisplay() {
-        let display = "";
-        let allGuessed = true;
-
-        for (const ch of selectedWord) {
-          if (guessedLetters.has(ch)) {
-            display += ch.toUpperCase() + " ";
-          } else {
-            display += "_ ";
-            allGuessed = false;
-          }
-        }
-        wordDisplay.textContent = display.trim();
-
-        if (allGuessed) {
-          statusDiv.textContent = "🎉 You won! 🎉";
-          disableLetters();
-        }
+      // Pole
+      if (mistakes > 1) {
+        ctx.beginPath();
+        ctx.moveTo(50, 240);
+        ctx.lineTo(50, 20);
+        ctx.stroke();
       }
-
-      function disableLetters() {
-        [...lettersDiv.children].forEach(btn => btn.disabled = true);
+      // Beam
+      if (mistakes > 2) {
+        ctx.beginPath();
+        ctx.moveTo(50, 20);
+        ctx.lineTo(150, 20);
+        ctx.stroke();
       }
+      // Rope
+      if (mistakes > 3) {
+        ctx.beginPath();
+        ctx.moveTo(150, 20);
+        ctx.lineTo(150, 50);
+        ctx.stroke();
+      }
+      // Head
+      if (mistakes > 4) {
+        ctx.beginPath();
+        ctx.arc(150, 70, 20, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      // Body
+      if (mistakes > 5) {
+        ctx.beginPath();
+        ctx.moveTo(150, 90);
+        ctx.lineTo(150, 150);
+        ctx.stroke();
+      }
+      // Left Arm
+      if (mistakes > 6) {
+        ctx.beginPath();
+        ctx.moveTo(150, 100);
+        ctx.lineTo(120, 130);
+        ctx.stroke();
+      }
+      // Right Arm
+      if (mistakes > 7) {
+        ctx.beginPath();
+        ctx.moveTo(150, 100);
+        ctx.lineTo(180, 130);
+        ctx.stroke();
+      }
+      // Left Leg
+      if (mistakes > 8) {
+        ctx.beginPath();
+        ctx.moveTo(150, 150);
+        ctx.lineTo(120, 190);
+        ctx.stroke();
+      }
+      // Right Leg
+      if (mistakes > 9) {
+        ctx.beginPath();
+        ctx.moveTo(150, 150);
+        ctx.lineTo(180, 190);
+        ctx.stroke();
+      }
+    }
 
-      function guessLetter(letter, button) {
-        button.disabled = true;
-
-        if (selectedWord.includes(letter)) {
-          guessedLetters.add(letter);
-          updateWordDisplay();
+    function updateWordDisplay() {
+      let display = "";
+      for (const letter of chosenWord) {
+        if (guessedLetters.includes(letter)) {
+          display += letter + " ";
         } else {
-          wrongGuesses++;
-          hangmanFigure.textContent = hangmanStates[Math.min(wrongGuesses, maxWrong)];
-          if (wrongGuesses >= maxWrong) {
-            statusDiv.textContent = `💀 You lost! The word was "${selectedWord.toUpperCase()}"`;
-            disableLetters();
-          }
+          display += "_ ";
         }
       }
+      wordDiv.textContent = display.trim();
+    }
 
-      restartBtn.addEventListener("click", setup);
+    function checkGameStatus() {
+      if (!wordDiv.textContent.includes("_")) {
+        messageDiv.textContent = "🎉 You Win! Refresh to play again.";
+        disableButtons();
+      } else if (mistakes >= maxMistakes) {
+        messageDiv.textContent = `💀 Game Over! The word was: ${chosenWord}. Refresh to try again.`;
+        disableButtons();
+      } else {
+        messageDiv.textContent = "";
+      }
+    }
 
-      setup();
-    })();
+    function disableButtons() {
+      const buttons = lettersDiv.querySelectorAll("button");
+      buttons.forEach(btn => btn.disabled = true);
+    }
+
+    function createLetterButtons() {
+      lettersDiv.innerHTML = "";
+      for (let i = 65; i <= 90; i++) {
+        const letter = String.fromCharCode(i);
+        const button = document.createElement("button");
+        button.textContent = letter;
+        button.setAttribute("aria-label", `Guess letter ${letter}`);
+        button.addEventListener("click", () => {
+          if (guessedLetters.includes(letter)) return;
+          guessedLetters.push(letter);
+          button.disabled = true;
+          if (!chosenWord.includes(letter)) {
+            mistakes++;
+          }
+          updateWordDisplay();
+          drawHangman();
+          checkGameStatus();
+        });
+        lettersDiv.appendChild(button);
+      }
+    }
+
+    function init() {
+      mistakes = 0;
+      guessedLetters = [];
+      pickWord();
+      updateWordDisplay();
+      createLetterButtons();
+      drawHangman();
+      messageDiv.textContent = "";
+    }
+
+    init();
   </script>
-
 </body>
 </html>
