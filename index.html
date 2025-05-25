@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spectrom Hangman</title>
-
+  <title>Spectrom Photo Match</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* Reset */
     * {
       box-sizing: border-box;
     }
     body {
       margin: 0;
-      background-color: #0B1E0B; /* Dark green Esk */
-      color: #A1C299; /* Light green text */
+      background-color: #0B1E0B;
+      color: #A1C299;
       font-family: 'Montserrat', sans-serif;
       display: flex;
       flex-direction: column;
@@ -29,83 +27,60 @@
     a:hover {
       color: #C1E1C1;
     }
-
-    /* Container for main content */
     main {
       flex: 1;
-      max-width: 700px;
-      margin: 0 auto 40px auto;
+      max-width: 800px;
+      margin: 0 auto;
       background: #102810;
       border: 2px solid #4CAF50;
       border-radius: 8px;
       padding: 30px;
       box-shadow: 0 0 15px #2E7D32;
+      text-align: center;
     }
-
     h1 {
-      margin: 0 0 20px 0;
       font-weight: 600;
       font-size: 2rem;
-      text-align: center;
       color: #7BC67E;
       text-shadow: 1px 1px 2px #004400;
     }
-
-    /* Hangman styles */
-    #word {
-      font-size: 2rem;
-      letter-spacing: 6px;
-      text-align: center;
-      margin: 20px 0 40px 0;
-      user-select: none;
-    }
-
-    #letters {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    #letters button {
-      background-color: #2E7D32;
-      border: 1px solid #4CAF50;
-      color: #C8E6C9;
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin: 4px;
-      padding: 10px 14px;
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #4CAF50;
       border-radius: 4px;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s;
+      margin-bottom: 20px;
     }
-    #letters button:hover:not(:disabled) {
+    input[type="text"] {
+      font-size: 1.2rem;
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border: 1px solid #4CAF50;
+      background-color: #0B1E0B;
+      color: #C8E6C9;
+    }
+    button {
+      font-size: 1rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      background-color: #2E7D32;
+      color: #C8E6C9;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    button:hover {
       background-color: #66BB6A;
       color: #1B5E20;
     }
-    #letters button:disabled {
-      background-color: #555;
-      color: #999;
-      cursor: default;
-    }
-
     #message {
-      text-align: center;
-      font-size: 1.2rem;
       margin-top: 20px;
+      font-size: 1.2rem;
       min-height: 1.4rem;
-      user-select: none;
     }
-
-    /* Hangman drawing */
-    #hangmanCanvas {
-      display: block;
-      margin: 0 auto 40px auto;
-      background: #081108;
-      border: 2px solid #4CAF50;
-      border-radius: 4px;
-    }
-
-    /* Footer like your original */
     footer {
       position: fixed;
       bottom: 20px;
@@ -124,223 +99,47 @@
       white-space: nowrap;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      user-select: none;
       z-index: 999;
-    }
-    footer a {
-      padding: 4px 8px;
-      border-radius: 4px;
-      white-space: nowrap;
     }
     footer a:hover {
       color: #d0f0c0;
       background-color: #356635;
     }
-    footer span {
-      color: #666;
-      user-select: none;
-    }
-
-    @media (max-width: 600px) {
-      main {
-        padding: 20px;
-        max-width: 95vw;
-      }
-      #letters button {
-        padding: 8px 10px;
-        font-size: 1rem;
-      }
-      footer {
-        font-size: 0.8rem;
-        padding: 8px 14px;
-        gap: 6px;
-      }
-    }
   </style>
 </head>
 <body>
   <main>
-    <h1>Hangman - Spectrom Classic</h1>
-
-    <canvas id="hangmanCanvas" width="200" height="250" aria-label="Hangman drawing"></canvas>
-
-    <div id="word" aria-live="polite" aria-atomic="true">_ _ _ _ _</div>
-
-    <div id="letters" role="group" aria-label="Choose a letter"></div>
-
-    <div id="message" role="alert" aria-live="assertive"></div>
+    <h1>Spectrom Visual Guess</h1>
+    <img src="your-image-path.jpg" alt="Spectrom Clue Image" />
+    <div>
+      <input type="text" id="guessInput" placeholder="Type your guess here..." />
+      <button onclick="checkGuess()">Submit</button>
+    </div>
+    <div id="message"></div>
   </main>
-
   <footer>
-    <a href="https://discord.gg/75hRp5BhTW" target="_blank" rel="noopener noreferrer">Spectrom Clover Kingdom</a>
+    <a href="https://discord.gg/75hRp5BhTW" target="_blank">Spectrom Clover Kingdom</a>
     <span>•</span>
-    <a href="https://medal.tv/u/Spectrom47?invite=ur-MSwzQ3gsMjYyMDI0Mzc2" target="_blank" rel="noopener noreferrer">Latest Highlights</a>
+    <a href="https://medal.tv/u/Spectrom47" target="_blank">Latest Highlights</a>
     <span>•</span>
-    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0?si=3a19b619c792450b&pt=6768c2b209dfb4a2f6b2d80aedacc201" target="_blank" rel="noopener noreferrer">My Spotify Playlist</a>
+    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">Spotify Playlist</a>
   </footer>
-
   <script>
-    // Hangman logic + canvas drawing
+    const correctAnswers = ["spectrom", "esk"];
 
-    const wordList = [
-      "spectrom", "girlypop", "community", "domain", "roblox", "sensifi",
-      "kurffew", "aweseome", "classic", "edge", "green", "programming"
-    ];
+    function checkGuess() {
+      const input = document.getElementById("guessInput");
+      const message = document.getElementById("message");
+      const guess = input.value.trim().toLowerCase();
 
-    let chosenWord = "";
-    let guessedLetters = [];
-    let mistakes = 0;
-    const maxMistakes = 6;
-
-    const wordDiv = document.getElementById("word");
-    const lettersDiv = document.getElementById("letters");
-    const messageDiv = document.getElementById("message");
-    const canvas = document.getElementById("hangmanCanvas");
-    const ctx = canvas.getContext("2d");
-
-    function pickWord() {
-      const idx = Math.floor(Math.random() * wordList.length);
-      chosenWord = wordList[idx].toUpperCase();
-    }
-
-    function drawHangman() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "#4CAF50";
-      ctx.lineWidth = 4;
-
-      // Base
-      if (mistakes > 0) {
-        ctx.beginPath();
-        ctx.moveTo(10, 240);
-        ctx.lineTo(190, 240);
-        ctx.stroke();
-      }
-      // Pole
-      if (mistakes > 1) {
-        ctx.beginPath();
-        ctx.moveTo(50, 240);
-        ctx.lineTo(50, 20);
-        ctx.stroke();
-      }
-      // Beam
-      if (mistakes > 2) {
-        ctx.beginPath();
-        ctx.moveTo(50, 20);
-        ctx.lineTo(150, 20);
-        ctx.stroke();
-      }
-      // Rope
-      if (mistakes > 3) {
-        ctx.beginPath();
-        ctx.moveTo(150, 20);
-        ctx.lineTo(150, 50);
-        ctx.stroke();
-      }
-      // Head
-      if (mistakes > 4) {
-        ctx.beginPath();
-        ctx.arc(150, 70, 20, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-      // Body
-      if (mistakes > 5) {
-        ctx.beginPath();
-        ctx.moveTo(150, 90);
-        ctx.lineTo(150, 150);
-        ctx.stroke();
-      }
-      // Left Arm
-      if (mistakes > 6) {
-        ctx.beginPath();
-        ctx.moveTo(150, 100);
-        ctx.lineTo(120, 130);
-        ctx.stroke();
-      }
-      // Right Arm
-      if (mistakes > 7) {
-        ctx.beginPath();
-        ctx.moveTo(150, 100);
-        ctx.lineTo(180, 130);
-        ctx.stroke();
-      }
-      // Left Leg
-      if (mistakes > 8) {
-        ctx.beginPath();
-        ctx.moveTo(150, 150);
-        ctx.lineTo(120, 190);
-        ctx.stroke();
-      }
-      // Right Leg
-      if (mistakes > 9) {
-        ctx.beginPath();
-        ctx.moveTo(150, 150);
-        ctx.lineTo(180, 190);
-        ctx.stroke();
-      }
-    }
-
-    function updateWordDisplay() {
-      let display = "";
-      for (const letter of chosenWord) {
-        if (guessedLetters.includes(letter)) {
-          display += letter + " ";
-        } else {
-          display += "_ ";
-        }
-      }
-      wordDiv.textContent = display.trim();
-    }
-
-    function checkGameStatus() {
-      if (!wordDiv.textContent.includes("_")) {
-        messageDiv.textContent = "🎉 You Win! Refresh to play again.";
-        disableButtons();
-      } else if (mistakes >= maxMistakes) {
-        messageDiv.textContent = `💀 Game Over! The word was: ${chosenWord}. Refresh to try again.`;
-        disableButtons();
+      if (correctAnswers.includes(guess)) {
+        message.textContent = "Correct! Great guess.";
+        message.style.color = "#7BC67E";
       } else {
-        messageDiv.textContent = "";
+        message.textContent = "Incorrect, try again.";
+        message.style.color = "#FF8A80";
       }
     }
-
-    function disableButtons() {
-      const buttons = lettersDiv.querySelectorAll("button");
-      buttons.forEach(btn => btn.disabled = true);
-    }
-
-    function createLetterButtons() {
-      lettersDiv.innerHTML = "";
-      for (let i = 65; i <= 90; i++) {
-        const letter = String.fromCharCode(i);
-        const button = document.createElement("button");
-        button.textContent = letter;
-        button.setAttribute("aria-label", `Guess letter ${letter}`);
-        button.addEventListener("click", () => {
-          if (guessedLetters.includes(letter)) return;
-          guessedLetters.push(letter);
-          button.disabled = true;
-          if (!chosenWord.includes(letter)) {
-            mistakes++;
-          }
-          updateWordDisplay();
-          drawHangman();
-          checkGameStatus();
-        });
-        lettersDiv.appendChild(button);
-      }
-    }
-
-    function init() {
-      mistakes = 0;
-      guessedLetters = [];
-      pickWord();
-      updateWordDisplay();
-      createLetterButtons();
-      drawHangman();
-      messageDiv.textContent = "";
-    }
-
-    init();
   </script>
 </body>
 </html>
