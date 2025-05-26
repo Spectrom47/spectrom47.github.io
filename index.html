@@ -235,4 +235,163 @@
       border-radius: 20px;
       color: #33FF77;
       font-weight: bold;
-      cursor:
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .tamagotchi-button:hover {
+      background-color: #33FF77;
+      color: #0c2b1f;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .tamagotchi-face.bounce {
+      animation: bounce 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Welcome to Spectrom</h1>
+    <div class="profile-section">
+      <img src="MyIcon.png" alt="Spectrom Profile Icon" class="profile-icon">
+      <div class="email-box">
+        <span class="founder-highlight">📧 Founder</span>
+        <span class="gradient-text">of Spectrom Clover Kingdom</span>
+      </div>
+    </div>
+
+    <div class="content-box">
+      <p><strong>🌿 Welcome To My Domain:</strong> My Virtual Portfolio</p>
+    </div>
+
+    <div class="content-box">
+      <p class="bullet"><span class="web">🧠 My Content:</span> Software Developer | 10 Years | Front End Developer</p>
+      <p class="bullet"><span class="python">🐍 Python External Applications:</span> Certified | 8 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="csharp">🧩 C# External Applications:</span> 41% Cert. | 3.1 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="cpp">💠 C++ External Applications:</span> 17.2% Cert. | 2.6 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="web">🌐 Website Developer:</span> 72% Cert. | 2.5 Years | Mimo and Code Academy</p>
+      <p class="bullet"><span class="roblox">🎮 Roblox | Scripting:</span> Journeyman Apprentice | 12 Years | Roblox Docs & DevKing</p>
+      <p class="bullet"><span class="roblox">🗰️ Roblox | Builder:</span> Journeyman Apprentice | 8.1 Years | Trained by: Kurffew / Symboria</p>
+    </div>
+
+    <!-- Tamagotchi Section -->
+    <div class="tamagotchi-container">
+      <div class="tamagotchi-display">
+        <div class="tamagotchi-face" id="tamagotchi-face">
+          <div class="tamagotchi-eyes">
+            <div class="tamagotchi-eye">
+              <div class="tamagotchi-pupil"></div>
+            </div>
+            <div class="tamagotchi-eye">
+              <div class="tamagotchi-pupil"></div>
+            </div>
+          </div>
+          <div class="tamagotchi-mouth"></div>
+        </div>
+      </div>
+      
+      <div class="tamagotchi-status">
+        <div class="status-bar">
+          <div>Hunger</div>
+          <div class="status-bar-fill" id="hunger-bar" style="width: 70%;"></div>
+        </div>
+        <div class="status-bar">
+          <div>Happiness</div>
+          <div class="status-bar-fill" id="happiness-bar" style="width: 80%;"></div>
+        </div>
+        <div class="status-bar">
+          <div>Health</div>
+          <div class="status-bar-fill" id="health-bar" style="width: 90%;"></div>
+        </div>
+      </div>
+      
+      <div class="tamagotchi-controls">
+        <button class="tamagotchi-button" id="feed-button">Feed</button>
+        <button class="tamagotchi-button" id="play-button">Play</button>
+        <button class="tamagotchi-button" id="heal-button">Heal</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://discord.gg/75hRp5BhTW" target="_blank">👑 Spectrom Clover Kingdom 👑</a>
+    <a href="https://medal.tv/u/Spectrom47" target="_blank">🎥 Latest Highlights 🎥</a>
+    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">🎵 Spotify Playlist 🎵</a>
+  </footer>
+
+  <script>
+    // Tamagotchi variables
+    let hunger = 70;
+    let happiness = 80;
+    let health = 90;
+    
+    // Update status bars
+    function updateStatusBars() {
+      document.getElementById('hunger-bar').style.width = hunger + '%';
+      document.getElementById('happiness-bar').style.width = happiness + '%';
+      document.getElementById('health-bar').style.width = health + '%';
+    }
+    
+    // Add bounce animation
+    function bounceFace() {
+      document.getElementById('tamagotchi-face').classList.add('bounce');
+      setTimeout(() => {
+        document.getElementById('tamagotchi-face').classList.remove('bounce');
+      }, 500);
+    }
+    
+    // Button click handlers
+    document.getElementById('feed-button').addEventListener('click', function() {
+      if (hunger < 100) {
+        hunger += 15;
+        if (hunger > 100) hunger = 100;
+        updateStatusBars();
+        bounceFace();
+      }
+    });
+    
+    document.getElementById('play-button').addEventListener('click', function() {
+      if (happiness < 100) {
+        happiness += 15;
+        if (happiness > 100) happiness = 100;
+        hunger -= 10;
+        if (hunger < 0) hunger = 0;
+        updateStatusBars();
+        bounceFace();
+      }
+    });
+    
+    document.getElementById('heal-button').addEventListener('click', function() {
+      if (health < 100) {
+        health += 20;
+        if (health > 100) health = 100;
+        happiness -= 5;
+        if (happiness < 0) happiness = 0;
+        updateStatusBars();
+        bounceFace();
+      }
+    });
+    
+    // Decrement stats over time
+    setInterval(function() {
+      hunger -= 1;
+      happiness -= 1;
+      health -= 0.5;
+      
+      if (hunger < 0) hunger = 0;
+      if (happiness < 0) happiness = 0;
+      if (health < 0) health = 0;
+      
+      updateStatusBars();
+    }, 5000);
+    
+    // Initialize status bars
+    updateStatusBars();
+  </script>
+</body>
+</html>
