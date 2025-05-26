@@ -125,50 +125,114 @@
       color: #ffffff;
       border-radius: 5px;
     }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Welcome to Spectrom</h1>
-    <div class="profile-section">
-      <img src="MyIcon.png" alt="Spectrom Profile Icon" class="profile-icon">
-      <div class="email-box">
-        <span class="founder-highlight">📧 Founder</span>
-        <span class="gradient-text">of Spectrom Clover Kingdom</span>
-      </div>
-    </div>
-
-    <div class="content-box">
-      <p><strong>🌿 Welcome To My Domain:</strong> My Virtual Portfolio</p>
-    </div>
-
-    <div class="content-box">
-      <p class="bullet"><span class="web">🧠 My Content:</span> Software Developer | 10 Years | Front End Developer</p>
-      <p class="bullet"><span class="python">🐍 Python External Applications:</span> Certified | 8 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="csharp">🧩 C# External Applications:</span> 41% Cert. | 3.1 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="cpp">💠 C++ External Applications:</span> 17.2% Cert. | 2.6 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="web">🌐 Website Developer:</span> 72% Cert. | 2.5 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="roblox">🎮 Roblox | Scripting:</span> Journeyman Apprentice | 12 Years | Roblox Docs & DevKing</p>
-      <p class="bullet"><span class="roblox">🏗️ Roblox | Builder:</span> Journeyman Apprentice | 8.1 Years | Trained by: Kurffew / Symboria</p>
-    </div>
-
-    <div class="content-box">
-      <p><strong>📊 Work Experience:</strong> 15 Years Experience | $1.7 Million Total Sales Tracked</p>
-    </div>
-
-    <div class="content-box">
-      <p class="bullet"><span class="web">🛠️ Pro Sales Specialist:</span> Lowes | 3 Years | Commercial and Non-Commercial Sales</p>
-      <p class="bullet"><span class="python">🏬 Sales Specialist:</span> HomeDepot | 3.4 Years | Non-Commercial Sales</p>
-      <p class="bullet"><span class="csharp">🎧 Customer Lead:</span> HomeDepot | 1.8 Years | Customer Relations</p>
-      <p class="bullet"><span class="cpp">🚚 Amazon Team Lead:</span> 2.6 Years | 3rd Shift Night</p>
-      <p class="bullet"><span class="cpp">🧼 Crew Carwash:</span> 3.6 Years | 3rd Shift Night</p>
-    </div>
-  </main>
-
-  <footer>
-    <a href="https://discord.gg/75hRp5BhTW" target="_blank">👑 Spectrom Clover Kingdom 👑</a>
-    <a href="https://medal.tv/u/Spectrom47" target="_blank">🎥 Latest Highlights 🎥</a>
-    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">🎵 Spotify Playlist 🎵</a>
-  </footer>
-</body>
-</html>
+    
+    /* Tamagotchi Styles */
+    .tamagotchi-container {
+      background: linear-gradient(to bottom right, #0f2618, #122f21);
+      border: 2px solid #33FF77;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 20px #00ff88;
+    }
+    
+    .tamagotchi-display {
+      width: 200px;
+      height: 200px;
+      background-color: #0f2618;
+      border: 3px solid #33FF77;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 20px #00ff88;
+    }
+    
+    .tamagotchi-face {
+      width: 80%;
+      height: 80%;
+      background-color: #0c2b1f;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .tamagotchi-eyes {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    .tamagotchi-eye {
+      width: 30px;
+      height: 30px;
+      background-color: #33FF77;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tamagotchi-pupil {
+      width: 15px;
+      height: 15px;
+      background-color: #000e06;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .tamagotchi-mouth {
+      width: 60px;
+      height: 20px;
+      background-color: #33FF77;
+      border-radius: 0 0 30px 30px;
+    }
+    
+    .tamagotchi-status {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    .status-bar {
+      width: 30%;
+      background-color: #0c2b1f;
+      border: 2px solid #33FF77;
+      border-radius: 10px;
+      padding: 5px;
+      text-align: center;
+    }
+    
+    .status-bar-fill {
+      height: 10px;
+      background-color: #33FF77;
+      border-radius: 5px;
+      transition: width 0.3s ease;
+    }
+    
+    .tamagotchi-controls {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .tamagotchi-button {
+      padding: 10px 20px;
+      background-color: #0c2b1f;
+      border: 2px solid #33FF77;
+      border-radius: 20px;
+      color: #33FF77;
+      font-weight: bold;
+      cursor:
