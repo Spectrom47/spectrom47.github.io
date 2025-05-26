@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spectrom Hub</title>
+  <title>Spectrom Hub Forums</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -22,61 +22,27 @@
     }
     main {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1200px;
       margin: auto;
-      padding: 40px;
+      padding: 20px;
       background-color: rgba(10, 35, 20, 0.9);
       border: 2px solid #33FF77;
       border-radius: 12px;
       box-shadow: 0 0 30px #00ff88;
     }
+    header {
+      background: linear-gradient(to right, #0f2618, #122f21);
+      padding: 15px;
+      border-radius: 10px 10px 0 0;
+      border-bottom: 2px solid #33FF77;
+      margin-bottom: 20px;
+    }
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      text-align: center;
+      font-size: 2rem;
+      text-align: left;
       color: #33FF77;
-      text-shadow: 0 0 8px #00ff88, 0 0 16px #005533;
-      margin-bottom: 30px;
-    }
-    .profile-section {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      background-color: #122f21;
-      border: 2px solid #33FF77;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 15px #00ff88;
-      margin-bottom: 30px;
-    }
-    .profile-icon {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 2px solid #33FF77;
-      box-shadow: 0 0 12px #00ff88;
-      object-fit: cover;
-    }
-    .email-box {
-      font-size: 1.2rem;
-    }
-    .founder-highlight {
-      display: block;
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #33FF77;
-      text-shadow: 0 0 8px #00ff88;
-    }
-    .gradient-text {
-      background: linear-gradient(to right, #33FF77, #99FFDD, #A8FFBF);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: bold;
-      animation: flicker 2.5s infinite;
-    }
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+      margin-bottom: 10px;
     }
     .content-box {
       background: #0f2618;
@@ -85,19 +51,220 @@
       border-radius: 10px;
       margin-bottom: 20px;
       box-shadow: 0 0 10px #007744;
-      line-height: 1.6;
-      font-size: 1.1rem;
     }
-    .bullet span {
-      font-weight: bold;
+    .forum-nav {
+      background-color: #122f21;
+      border: 1px solid #33FF77;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .forum-nav a {
       display: inline-block;
-      margin-right: 6px;
+      color: #A8FFBF;
+      text-align: center;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
-    .python { color: #8FFFBC; }
-    .csharp { color: #A8C7FF; }
-    .cpp { color: #FFBFA8; }
-    .web { color: #FFF3A8; }
-    .roblox { color: #A8FFD8; }
+    .forum-nav a:hover {
+      background-color: #33FF77;
+      color: #0c2b1f;
+    }
+    .forum-main {
+      display: flex;
+      gap: 20px;
+    }
+    .forum-content {
+      flex-grow: 1;
+    }
+    .forum-section {
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .forum-section h3 {
+      color: #33FF77;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #33FF77;
+    }
+    .forum-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .forum-table th {
+      background-color: #122f21;
+      color: #33FF77;
+      padding: 10px;
+      text-align: left;
+    }
+    .forum-table td {
+      padding: 10px;
+      border-bottom: 1px solid #122f21;
+    }
+    .forum-sidebar {
+      width: 250px;
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .user-info {
+      margin-bottom: 20px;
+    }
+    .user-info h4 {
+      color: #33FF77;
+      margin-bottom: 5px;
+    }
+    .online-users {
+      margin-bottom: 20px;
+    }
+    .online-users h4 {
+      color: #33FF77;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #33FF77;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(10, 35, 20, 0.95);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 15px 10px;
+      border-top: 2px solid #33FF77;
+      box-shadow: 0 -2px 20px #00ff88;
+      z-index: 999;
+    }
+    footer a {
+      color: #A8FFBF;
+      padding: 10px;
+      text-align: center;
+      min-width: 150px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: allHere's the combined code for your Spectrom Hub forum website with the Tamagotchi feature. This code merges the forum design from the image with your existing template:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spectrom Hub Forums</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: #000e06;
+      background: radial-gradient(circle at top left, #0f0f0f, #0c2b1f 40%, #06140b);
+      color: #A8FFBF;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(10, 35, 20, 0.9);
+      border: 2px solid #33FF77;
+      border-radius: 12px;
+      box-shadow: 0 0 30px #00ff88;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #33FF77;
+      margin-bottom: 20px;
+    }
+    .forum-nav {
+      background-color: #122f21;
+      border: 1px solid #33FF77;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .forum-nav a {
+      display: inline-block;
+      color: #A8FFBF;
+      text-align: center;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .forum-nav a:hover {
+      background-color: #33FF77;
+      color: #0c2b1f;
+    }
+    .forum-main {
+      display: flex;
+      gap: 20px;
+    }
+    .forum-content {
+      flex-grow: 1;
+    }
+    .forum-section {
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .forum-section h3 {
+      color: #33FF77;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #33FF77;
+    }
+    .forum-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .forum-table th {
+      background-color: #122f21;
+      color: #33FF77;
+      padding: 10px;
+      text-align: left;
+    }
+    .forum-table td {
+      padding: 10px;
+      border-bottom: 1px solid #122f21;
+    }
+    .forum-sidebar {
+      width: 250px;
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .user-info {
+      margin-bottom: 20px;
+    }
+    .user-info h4 {
+      color: #33FF77;
+      margin-bottom: 5px;
+    }
+    .online-users {
+      margin-bottom: 20px;
+    }
+    .online-users h4 {
+      color: #33FF77;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #33FF77;
+    }
     footer {
       position: fixed;
       bottom: 0;
@@ -256,64 +423,154 @@
 </head>
 <body>
   <main>
-    <h1>Welcome to Spectrom</h1>
-    <div class="profile-section">
-      <img src="MyIcon.png" alt="Spectrom Profile Icon" class="profile-icon">
-      <div class="email-box">
-        <span class="founder-highlight">📧 Founder</span>
-        <span class="gradient-text">of Spectrom Clover Kingdom</span>
-      </div>
+    <h1>Forum - Spectrom Hub - Enjin</h1>
+    <div class="forum-nav">
+      <a href="#home">Home</a>
+      <a href="#community">Community</a>
+      <a href="#members">Members</a>
+      <a href="#chat">Chat Room</a>
     </div>
-
-    <div class="content-box">
-      <p><strong>🌿 Welcome To My Domain:</strong> My Virtual Portfolio</p>
-    </div>
-
-    <div class="content-box">
-      <p class="bullet"><span class="web">🧠 My Content:</span> Software Developer | 10 Years | Front End Developer</p>
-      <p class="bullet"><span class="python">🐍 Python External Applications:</span> Certified | 8 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="csharp">🧩 C# External Applications:</span> 41% Cert. | 3.1 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="cpp">💠 C++ External Applications:</span> 17.2% Cert. | 2.6 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="web">🌐 Website Developer:</span> 72% Cert. | 2.5 Years | Mimo and Code Academy</p>
-      <p class="bullet"><span class="roblox">🎮 Roblox | Scripting:</span> Journeyman Apprentice | 12 Years | Roblox Docs & DevKing</p>
-      <p class="bullet"><span class="roblox">🗰️ Roblox | Builder:</span> Journeyman Apprentice | 8.1 Years | Trained by: Kurffew / Symboria</p>
-    </div>
-
-    <!-- Tamagotchi Section -->
-    <div class="tamagotchi-container">
-      <div class="tamagotchi-display">
-        <div class="tamagotchi-face" id="tamagotchi-face">
-          <div class="tamagotchi-eyes">
-            <div class="tamagotchi-eye">
-              <div class="tamagotchi-pupil"></div>
-            </div>
-            <div class="tamagotchi-eye">
-              <div class="tamagotchi-pupil"></div>
+    
+    <div class="forum-main">
+      <div class="forum-content">
+        <div class="forum-section">
+          <h3>Main Forum</h3>
+          <p>Welcome to our community forums. Please feel free to create a new post or reply to existing ones.</p>
+        </div>
+        
+        <div id="community" class="forum-section">
+          <h3>Community</h3>
+          <table class="forum-table">
+            <thead>
+              <tr>
+                <th>Forum</th>
+                <th>Threads</th>
+                <th>Posts</th>
+                <th>Latest Posts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>General Discussion</td>
+                <td>0</td>
+                <td>0</td>
+                <td>There are no new posts</td>
+              </tr>
+              <tr>
+                <td>Gaming</td>
+                <td>0</td>
+                <td>0</td>
+                <td>There are no new posts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div id="games" class="forum-section">
+          <h3>Games</h3>
+          <table class="forum-table">
+            <thead>
+              <tr>
+                <th>Forum</th>
+                <th>Threads</th>
+                <th>Posts</th>
+                <th>Latest Posts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Garry's Mod</td>
+                <td>0</td>
+                <td>0</td>
+                <td>There are no new posts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="forum-section">
+          <p>Members: 1 | Threads: 0 | Posts: 0 | Views: 0</p>
+          <p>Welcome to our latest member Tomahawk registered 6 mins ago</p>
+          <p>Online users: Tomahawk</p>
+        </div>
+        
+        <!-- Tamagotchi Section -->
+        <div class="tamagotchi-container">
+          <div class="tamagotchi-display">
+            <div class="tamagotchi-face" id="tamagotchi-face">
+              <div class="tamagotchi-eyes">
+                <div class="tamagotchi-eye">
+                  <div class="tamagotchi-pupil"></div>
+                </div>
+                <div class="tamagotchi-eye">
+                  <div class="tamagotchi-pupil"></div>
+                </div>
+              </div>
+              <div class="tamagotchi-mouth"></div>
             </div>
           </div>
-          <div class="tamagotchi-mouth"></div>
+          
+          <div class="tamagotchi-status">
+            <div class="status-bar">
+              <div>Hunger</div>
+              <div class="status-bar-fill" id="hunger-bar" style="width: 70%;"></div>
+            </div>
+            <div class="status-bar">
+              <div>Happiness</div>
+              <div class="status-bar-fill" id="happiness-bar" style="width: 80%;"></div>
+            </div>
+            <div class="status-bar">
+              <div>Health</div>
+              <div class="status-bar-fill" id="health-bar" style="width: 90%;"></div>
+            </div>
+          </div>
+          
+          <div class="tamagotchi-controls">
+            <button class="tamagotchi-button" id="feed-button">Feed</button>
+            <button class="tamagotchi-button" id="play-button">Play</button>
+            <button class="tamagotchi-button" id="heal-button">Heal</button>
+          </div>
         </div>
       </div>
       
-      <div class="tamagotchi-status">
-        <div class="status-bar">
-          <div>Hunger</div>
-          <div class="status-bar-fill" id="hunger-bar" style="width: 70%;"></div>
+      <div class="forum-sidebar">
+        <div class="user-info">
+          <h4>Login or Register</h4>
+          <div class="user-profile">
+            <img src="avatar.png" alt="User Avatar" style="width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px;">
+            <h4>Tomahawk</h4>
+            <p>Owner</p>
+            <p>0 Posts</p>
+            <p>Account</p>
+            <p>Logout</p>
+          </div>
         </div>
-        <div class="status-bar">
-          <div>Happiness</div>
-          <div class="status-bar-fill" id="happiness-bar" style="width: 80%;"></div>
+        
+        <div class="online-users">
+          <h4>Online users (1)</h4>
+          <div class="user-list">
+            <img src="avatar.png" alt="Online User" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
+            <span>Tomahawk - Currently browsing</span>
+          </div>
         </div>
-        <div class="status-bar">
-          <div>Health</div>
-          <div class="status-bar-fill" id="health-bar" style="width: 90%;"></div>
+        
+        <div class="online-users">
+          <h4>Latest Threads</h4>
+          <p>There are no viewable threads</p>
         </div>
-      </div>
-      
-      <div class="tamagotchi-controls">
-        <button class="tamagotchi-button" id="feed-button">Feed</button>
-        <button class="tamagotchi-button" id="play-button">Play</button>
-        <button class="tamagotchi-button" id="heal-button">Heal</button>
+        
+        <div class="online-users">
+          <h4>Top Posters</h4>
+          <div class="user-list">
+            <img src="avatar.png" alt="Top Poster" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
+            <span>Tomahawk - 0 Posts</span>
+          </div>
+        </div>
+        
+        <div class="online-users">
+          <h4>Birthday Today</h4>
+          <p>There are no birthdays today.</p>
+        </div>
       </div>
     </div>
   </main>
