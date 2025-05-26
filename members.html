@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Members - Spectrom Hub Forums</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: #000e06;
+      background: radial-gradient(circle at top left, #0f0f0f, #0c2b1f 40%, #06140b);
+      color: #A8FFBF;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(10, 35, 20, 0.9);
+      border: 2px solid #33FF77;
+      border-radius: 12px;
+      box-shadow: 0 0 30px #00ff88;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #33FF77;
+      margin-bottom: 20px;
+    }
+    .forum-nav {
+      background-color: #122f21;
+      border: 1px solid #33FF77;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .forum-nav a {
+      display: inline-block;
+      color: #A8FFBF;
+      text-align: center;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .forum-nav a:hover {
+      background-color: #33FF77;
+      color: #0c2b1f;
+    }
+    .forum-main {
+      display: flex;
+      gap: 20px;
+    }
+    .forum-content {
+      flex-grow: 1;
+    }
+    .forum-section {
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .forum-section h3 {
+      color: #33FF77;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #33FF77;
+    }
+    .forum-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .forum-table th {
+      background-color: #122f21;
+      color: #33FF77;
+      padding: 10px;
+      text-align: left;
+    }
+    .forum-table td {
+      padding: 10px;
+      border-bottom: 1px solid #122f21;
+    }
+    .forum-sidebar {
+      width: 250px;
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .user-info {
+      margin-bottom: 20px;
+    }
+    .user-info h4 {
+      color: #33FF77;
+      margin-bottom: 5px;
+    }
+    .online-users {
+      margin-bottom: 20px;
+    }
+    .online-users h4 {
+      color: #33FF77;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #33FF77;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(10, 35, 20, 0.95);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 15px 10px;
+      border-top: 2px solid #33FF77;
+      box-shadow: 0 -2px 20px #00ff88;
+      z-index: 999;
+    }
+    footer a {
+      color: #A8FFBF;
+      padding: 10px;
+      text-align: center;
+      min-width: 150px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    footer a:hover {
+      background-color: #005533;
+      color: #ffffff;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Members - Spectrom Hub Forums</h1>
+      <div class="forum-nav">
+        <a href="index.html">Home</a>
+        <a href="community.html">Community</a>
+        <a href="members.html">Members</a>
+        <a href="chat.html">Chat Room</a>
+      </div>
+    </header>
+    
+    <div class="forum-main">
+      <div class="forum-content">
+        <div class="forum-section">
+          <h3>Member Directory</h3>
+          <table class="forum-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Joined</th>
+                <th>Posts</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tomahawk</td>
+                <td>2023-05-01</td>
+                <td>0</td>
+                <td>Owner</td>
+              </tr>
+              <tr>
+                <td>GamingPro</td>
+                <td>2023-05-05</td>
+                <td>12</td>
+                <td>Member</td>
+              </tr>
+              <tr>
+                <td>CodingNinja</td>
+                <td>2023-05-07</td>
+                <td>8</td>
+                <td>Member</td>
+              </tr>
+              <tr>
+                <td>ArtisticMind</td>
+                <td>2023-05-10</td>
+                <td>5</td>
+                <td>Member</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="forum-section">
+          <h3>Member Ranks</h3>
+          <table class="forum-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Required Posts</th>
+                <th>Privileges</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>New Member</td>
+                <td>0-9</td>
+                <td>Read and post in most forums</td>
+              </tr>
+              <tr>
+                <td>Member</td>
+                <td>10-49</td>
+                <td>All new member privileges + upload avatar</td>
+              </tr>
+              <tr>
+                <td>Senior Member</td>
+                <td>50-99</td>
+                <td>All member privileges + create polls</td>
+              </tr>
+              <tr>
+                <td>Elite Member</td>
+                <td>100+</td>
+                <td>All senior member privileges + moderate forums</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="forum-section">
+          <h3>Member of the Month</h3>
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="avatar.png" alt="Member of the Month" style="width: 100px; height: 100px; border-radius: 50%;">
+            <div>
+              <h4>GamingPro</h4>
+              <p>Recognized for their outstanding contributions to the community</p>
+              <p>Awarded: May 2023</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="forum-sidebar">
+        <div class="user-info">
+          <h4>Login or Register</h4>
+          <div class="user-profile">
+            <img src="avatar.png" alt="User Avatar" style="width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px;">
+            <h4>Tomahawk</h4>
+            <p>Owner</p>
+            <p>0 Posts</p>
+            <p>Account</p>
+            <p>Logout</p>
+          </div>
+        </div>
+        
+        <div class="online-users">
+          <h4>Online users (1)</h4>
+          <div class="user-list">
+            <img src="avatar.png" alt="Online User" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
+            <span>Tomahawk - Currently browsing</span>
+          </div>
+        </div>
+        
+        <div class="online-users">
+          <h4>Statistics</h4>
+          <p>Total members: 4</p>
+          <p>Newest member: ArtisticMind</p>
+          <p>Most users ever online: 12</p>
+          <p>Record date: 2023-05-15</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://discord.gg/75hRp5BhTW" target="_blank">👑 Spect

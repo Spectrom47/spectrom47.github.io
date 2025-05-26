@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spectrom Hub - Chat Room</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: #000e06;
+      background: radial-gradient(circle at top left, #0f0f0f, #0c2b1f 40%, #06140b);
+      color: #A8FFBF;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(10, 35, 20, 0.9);
+      border: 2px solid #33FF77;
+      border-radius: 12px;
+      box-shadow: 0 0 30px #00ff88;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #33FF77;
+      margin-bottom: 20px;
+    }
+    .forum-nav {
+      background-color: #122f21;
+      border: 1px solid #33FF77;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .forum-nav a {
+      display: inline-block;
+      color: #A8FFBF;
+      text-align: center;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .forum-nav a:hover {
+      background-color: #33FF77;
+      color: #0c2b1f;
+    }
+    .chat-container {
+      display: flex;
+      gap: 20px;
+    }
+    .chat-main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      background: #122f21;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .chat-area {
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      height: 400px;
+      overflow-y: auto;
+    }
+    .message {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #122f21;
+    }
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .message-sender {
+      font-weight: bold;
+      color: #33FF77;
+    }
+    .message-time {
+      color: #A8FFBF;
+      font-size: 0.8rem;
+    }
+    .message-content {
+      line-height: 1.4;
+    }
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+    .chat-input textarea {
+      flex-grow: 1;
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 5px;
+      color: #A8FFBF;
+      padding: 10px;
+      resize: none;
+      height: 80px;
+    }
+    .chat-input button {
+      padding: 10px 20px;
+      background-color: #0c2b1f;
+      border: 2px solid #33FF77;
+      border-radius: 20px;
+      color: #33FF77;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .chat-input button:hover {
+      background-color: #33FF77;
+      color: #0c2b1f;
+    }
+    .chat-sidebar {
+      width: 250px;
+      background: #0f2618;
+      border: 1px solid #33FF77;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .online-users {
+      margin-bottom: 20px;
+    }
+    .online-users h4 {
+      color: #33FF77;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #33FF77;
+    }
+    .user-list {
+      list-style-type: none;
+    }
+    .user-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #122f21;
+    }
+    .user-list .online {
+      color: #33FF77;
+    }
+    .user-list .offline {
+      color: #FF5733;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(10, 35, 20, 0.95);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 15px 10px;
+      border-top: 2px solid #33FF77;
+      box-shadow: 0 -2px 20px #00ff88;
+      z-index: 999;
+    }
+    footer a {
+      color: #A8FFBF;
+      padding: 10px;
+      text-align: center;
+      min-width: 150px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    footer a:hover {
+      background-color: #005533;
+      color: #ffffff;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Chat Room - Spectrom Hub</h1>
+    </header>
+    <div class="forum-nav">
+      <a href="index.html">Home</a>
+      <a href="community.html">Community</a>
+      <a href="members.html">Members</a>
+      <a href="chat.html">Chat Room</a>
+    </div>
+    
+    <div class="chat-container">
+      <div class="chat-main">
+        <div class="chat-header">
+          <h3>Live Chat</h3>
+          <p>Connect with other community members in real-time</p>
+        </div>
+        
+        <div class="chat-area" id="chat-area">
+          <div class="message">
+            <div class="message-header">
+              <span class="message-sender">System</span>
+              <span class="message-time">12:00 PM</span>
+            </div>
+            <div class="message-content">
+              Welcome to the Spectrom Hub Chat Room! Please introduce yourself to the community.
+            </div>
+          </div>
+          
+          <div class="message">
+            <div class="message-header">
+              <span class="message-sender">Tomahawk</span>
+              <span class="message-time">12:05 PM</span>
+            </div>
+            <div class="message-content">
+              Hello everyone! I'm Tomahawk, the founder of this community. How can I assist you today?
+            </div>
+          </div>
+          
+          <div class="message">
+            <div class="message-header">
+              <span class="message-sender">System</span>
+              <span class="message-time">12:05 PM</span>
+            </div>
+            <div class="message-content">
+              Tomahawk has joined the chat.
+            </div>
+          </div>
+        </div>
+        
+        <div class="chat-input">
+          <textarea id="message-input" placeholder="Type your message here..."></textarea>
+          <button id="send-button">Send</button>
+        </div>
+      </div>
+      
+      <div class="chat-sidebar">
+        <div class="online-users">
+          <h4>Online Users</h4>
+          <ul class="user-list">
+            <li class="online">Tomahawk <span class="status online">Online</span></li>
+            <li class="offline">Guest123 <span class="status offline">Offline</span></li>
+            <li class="offline">NewMember <span class="status offline">Offline</span></li>
+          </ul>
+        </div>
+        
+        <div class="online-users">
+          <h4>Chat Rules</h4>
+          <ul class="user-list">
+            <li>Be respectful to all members</li>
+            <li>No spamming or flooding</li>
+            <li>Keep discussions relevant</li>
+            <li>Report any inappropriate behavior</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://discord.gg/75hRp5BhTW" target="_blank">👑 Spectrom Clover Kingdom 👑</a>
+    <a href="https://medal.tv/u/Spectrom47" target="_blank">🎥 Latest Highlights 🎥</a>
+    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">🎵 Spotify Playlist 🎵</a>
+  </footer>
+
+  <script>
+    // Get DOM elements
+    const chatArea = document.getElementById('chat-area');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    
+    // Function to add a new message to the chat
+    function addMessage(sender, content, time, isSystem = false) {
+      const messageClass = isSystem ? 'message system-message' : 'message';
+      const senderClass = isSystem ? 'message-sender system-sender' : 'message-sender';
+      
+      const messageHTML = `
+        <div class="${messageClass}">
+          <div class="message-header">
+            <span class="${senderClass}">${sender}</span>
+            <span class="message-time">${time}</span>
+          </div>
+          <div class="message-content">
+            ${content}
+          </div>
+        </div>
+      `;
+      
+      chatArea.insertAdjacentHTML('beforeend', messageHTML);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+    
+    // Function to send a message
+    function sendMessage() {
+      const message = messageInput.value.trim();
+      if (message) {
+        const currentTime = new Date();
+        const timeString = `${currentTime.getHours()}:${String(currentTime.getMinutes()).padStart(2, '0')}`;
+        
+        addMessage('You', message, timeString);
+        messageInput.value = '';
+        
+        // Simulate a response from another user after 1-3 seconds
+        const responseTime = 1000 + Math.random() * 2000;
+        setTimeout(() => {
+          const responses = [
+            'That\'s interesting!',
+            'I agree with you.',
+            'Can you tell me more about that?',
+            'Thanks for sharing!',
+            'I\'ve experienced something similar.'
+          ];
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          
+          addMessage(
+            Math.random() > 0.5 ? 'Community Member' : 'Another User', 
+            randomResponse, 
+            `${timeString.split(':')[0]}:${String(parseInt(timeString.split(':')[1]) + 1).padStart(2, '0')}`
+          );
+        }, responseTime);
+      }
+    }
+    
+    // Event listeners
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
