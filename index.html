@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spectrom Hub Forums</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400  ;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -132,110 +132,139 @@
       min-width: 150px;
       text-decoration: none;
       font-weight: 600;
-      transition: all I've created a complete login and register system with a live chat feature for your forum. Here's the updated code:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spectrom Hub Forums</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Existing styles remain unchanged */
-    /* Added styles for login/register and chat */
-    .login-section, .register-section {
-      background: #0f2618;
-      border: 1px solid #33FF77;
-      border-radius: 10px;
-      padding: 15px;
+      transition: all 0.3s ease;
+    }
+    footer a:hover {
+      background-color: #005533;
+      color: #ffffff;
+      border-radius: 5px;
+    }
+    
+    /* Tamagotchi Styles */
+    .tamagotchi-container {
+      background: linear-gradient(to bottom right, #0f2618, #122f21);
+      border: 2px solid #33FF77;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 20px #00ff88;
+    }
+    
+    .tamagotchi-display {
+      width: 200px;
+      height: 200px;
+      background-color: #0f2618;
+      border: 3px solid #33FF77;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 20px #00ff88;
+    }
+    
+    .tamagotchi-face {
+      width: 80%;
+      height: 80%;
+      background-color: #0c2b1f;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .tamagotchi-eyes {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    .tamagotchi-eye {
+      width: 30px;
+      height: 30px;
+      background-color: #33FF77;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tamagotchi-pupil {
+      width: 15px;
+      height: 15px;
+      background-color: #000e06;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .tamagotchi-mouth {
+      width: 60px;
+      height: 20px;
+      background-color: #33FF77;
+      border-radius: 0 0 30px 30px;
+    }
+    
+    .tamagotchi-status {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
       margin-bottom: 20px;
     }
     
-    .form-group {
-      margin-bottom: 15px;
+    .status-bar {
+      width: 30%;
+      background-color: #0c2b1f;
+      border: 2px solid #33FF77;
+      border-radius: 10px;
+      padding: 5px;
+      text-align: center;
     }
     
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
+    .status-bar-fill {
+      height: 10px;
+      background-color: #33FF77;
+      border-radius: 5px;
+      transition: width 0.3s ease;
+    }
+    
+    .tamagotchi-controls {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .tamagotchi-button {
+      padding: 10px 20px;
+      background-color: #0c2b1f;
+      border: 2px solid #33FF77;
+      border-radius: 20px;
       color: #33FF77;
-    }
-    
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      background: #0c2b1f;
-      border: 1px solid #33FF77;
-      border-radius: 5px;
-      color: #A8FFBF;
-    }
-    
-    .form-group button {
-      width: 100%;
-      padding: 10px;
-      background: #33FF77;
-      border: none;
-      border-radius: 5px;
-      color: #0c2b1f;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.3s ease;
     }
     
-    .form-group button:hover {
-      background-color: #0c2b1f;
-      color: #33FF77;
-    }
-
-    .chat-container {
-      background: #0f2618;
-      border: 1px solid #33FF77;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    
-    .chat-messages {
-      height: 300px;
-      overflow-y: auto;
-      margin-bottom: 15px;
-      background: #0c2b1f;
-      border-radius: 5px;
-      padding: 10px;
-    }
-    
-    .chat-input {
-      display: flex;
-    }
-    
-    .chat-input input {
-      flex-grow: 1;
-      padding: 10px;
-      background: #0c2b1f;
-      border: 1px solid #33FF77;
-      border-radius: 5px;
-      color: #A8FFBF;
-    }
-    
-    .chat-input button {
-      margin-left: 10px;
-      padding: 10px 20px;
-      background: #33FF77;
-      border: none;
-      border-radius: 5px;
+    .tamagotchi-button:hover {
+      background-color: #33FF77;
       color: #0c2b1f;
-      font-weight: bold;
-      cursor: pointer;
     }
     
-    .audience-info {
-      text-align: center;
-      margin-top: 10px;
-      padding: 10px;
-      background: #0c2b1f;
-      border-radius: 5px;
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .tamagotchi-face.bounce {
+      animation: bounce 0.5s ease;
     }
   </style>
 </head>
@@ -243,315 +272,230 @@
   <main>
     <h1>Forum - Spectrom Hub - Enjin</h1>
     <div class="forum-nav">
-      <a href="index.html">Home</a>
-      <a href="community.html">Community</a>
-      <a href="members.html">Members</a>
-      <a href="chat.html">Chat Room</a>
+      <a href="#home">Home</a>
+      <a href="#community">Community</a>
+      <a href="#members">Members</a>
+      <a href="#chat">Chat Room</a>
     </div>
     
     <div class="forum-main">
       <div class="forum-content">
-        <!-- Existing forum content remains -->
+        <div class="forum-section">
+          <h3>Main Forum</h3>
+          <p>Welcome to our community forums. Please feel free to create a new post or reply to existing ones.</p>
+        </div>
+        
+        <div id="community" class="forum-section">
+          <h3>Community</h3>
+          <table class="forum-table">
+            <thead>
+              <tr>
+                <th>Forum</th>
+                <th>Threads</th>
+                <th>Posts</th>
+                <th>Latest Posts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>General Discussion</td>
+                <td>0</td>
+                <td>0</td>
+                <td>There are no new posts</td>
+              </tr>
+              <tr>
+                <td>Gaming</td>
+                <td>0</td>
+                <td>0</td>
+                <td>There are no new posts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div id="games" class="forum-section">
+          <h3>Games</h3>
+          <table class="forum-table">
+            <thead>
+              <tr>
+                <th>Forum</th>
+                <th>Threads</th>
+                <th>Posts</th>
+                <th>Latest Posts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Garry's Mod</td>
+                <td>0</td>
+                <td>0</td>
+                <td>There are no new posts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="forum-section">
+          <p>Members: 1 | Threads: 0 | Posts: 0 | Views: 0</p>
+          <p>Welcome to our latest member Tomahawk registered 6 mins ago</p>
+          <p>Online users: Tomahawk</p>
+        </div>
+        
+        <!-- Tamagotchi Section -->
+        <div class="tamagotchi-container">
+          <div class="tamagotchi-display">
+            <div class="tamagotchi-face" id="tamagotchi-face">
+              <div class="tamagotchi-eyes">
+                <div class="tamagotchi-eye">
+                  <div class="tamagotchi-pupil"></div>
+                </div>
+                <div class="tamagotchi-eye">
+                  <div class="tamagotchi-pupil"></div>
+                </div>
+              </div>
+              <div class="tamagotchi-mouth"></div>
+            </div>
+          </div>
+          
+          <div class="tamagotchi-status">
+            <div class="status-bar">
+              <div>Hunger</div>
+              <div class="status-bar-fill" id="hunger-bar" style="width: 70%;"></div>
+            </div>
+            <div class="status-bar">
+              <div>Happiness</div>
+              <div class="status-bar-fill" id="happiness-bar" style="width: 80%;"></div>
+            </div>
+            <div class="status-bar">
+              <div>Health</div>
+              <div class="status-bar-fill" id="health-bar" style="width: 90%;"></div>
+            </div>
+          </div>
+          
+          <div class="tamagotchi-controls">
+            <button class="tamagotchi-button" id="feed-button">Feed</button>
+            <button class="tamagotchi-button" id="play-button">Play</button>
+            <button class="tamagotchi-button" id="heal-button">Heal</button>
+          </div>
+        </div>
       </div>
       
       <div class="forum-sidebar">
-        <!-- Login and Registration -->
-        <div class="login-section">
-          <h4>Login</h4>
-          <div class="form-group">
-            <label for="login-username">Username</label>
-            <input type="text" id="login-username">
-          </div>
-          <div class="form-group">
-            <label for="login-password">Password</label>
-            <input type="password" id="login-password">
-          </div>
-          <div class="form-group">
-            <button id="login-button">Login</button>
+        <div class="user-info">
+          <h4>Login or Register</h4>
+          <div class="user-profile">
+            <img src="avatar.png" alt="User Avatar" style="width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px;">
+            <h4>Tomahawk</h4>
+            <p>Owner</p>
+            <p>0 Posts</p>
+            <p>Account</p>
+            <p>Logout</p>
           </div>
         </div>
         
-        <div class="register-section">
-          <h4>Register</h4>
-          <div class="form-group">
-            <label for="register-username">Username</label>
-            <input type="text" id="register-username">
-          </div>
-          <div class="form-group">
-            <label for="register-email">Email</label>
-            <input type="email" id="register-email">
-          </div>
-          <div class="form-group">
-            <label for="register-password">Password</label>
-            <input type="password" id="register-password">
-          </div>
-          <div class="form-group">
-            <button id="register-button">Register</button>
+        <div class="online-users">
+          <h4>Online users (1)</h4>
+          <div class="user-list">
+            <img src="avatar.png" alt="Online User" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
+            <span>Tomahawk - Currently browsing</span>
           </div>
         </div>
         
-        <!-- Existing sidebar content remains -->
+        <div class="online-users">
+          <h4>Latest Threads</h4>
+          <p>There are no viewable threads</p>
+        </div>
+        
+        <div class="online-users">
+          <h4>Top Posters</h4>
+          <div class="user-list">
+            <img src="avatar.png" alt="Top Poster" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
+            <span>Tomahawk - 0 Posts</span>
+          </div>
+        </div>
+        
+        <div class="online-users">
+          <h4>Birthday Today</h4>
+          <p>There are no birthdays today.</p>
+        </div>
       </div>
     </div>
   </main>
 
-  <div class="chat-container">
-    <h3>Live Chat</h3>
-    <div class="audience-info" id="audienceI've created a complete login and register system with a live chat feature for your forum. Here's the updated code:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spectrom Hub Forums</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Existing styles remain unchanged */
-    
-    /* Added styles for login/register and chat */
-    .login-section, .register-section {
-      background: #0f2618;
-      border: 1px solid #33FF77;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    
-    .form-group {
-      margin-bottom: 15px;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      color: #33FF77;
-    }
-    
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      background: #0c2b1f;
-      border: 1px solid #33FF77;
-      border-radius: 5px;
-      color: #A8FFBF;
-    }
-    
-    .form-group button {
-      width: 100%;
-      padding: 10px;
-      background: #33FF77;
-      border: none;
-      border-radius: 5px;
-      color: #0c2b1f;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .form-group button:hover {
-      background-color: #0c2b1f;
-      color: #33FF77;
-    }
-
-    .chat-container {
-      background: #0f2618;
-      border: 1px solid #33FF77;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    
-    .chat-messages {
-      height: 300px;
-      overflow-y: auto;
-      margin-bottom: 15px;
-      background: #0c2b1f;
-      border-radius: 5px;
-      padding: 10px;
-    }
-    
-    .chat-input {
-      display: flex;
-    }
-    
-    .chat-input input {
-      flex-grow: 1;
-      padding: 10px;
-      background: #0c2b1f;
-      border: 1px solid #33FF77;
-      border-radius: 5px;
-      color: #A8FFBF;
-    }
-    
-    .chat-input button {
-      margin-left: 10px;
-      padding: 10px 20px;
-      background: #33FF77;
-      border: none;
-      border-radius: 5px;
-      color: #0c2b1f;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    
-    .audience-info {
-      text-align: center;
-      margin-top: 10px;
-      padding: 10px;
-      background: #0c2b1f;
-      border-radius: 5px;
-    }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Forum - Spectrom Hub - Enjin</h1>
-    <div class="forum-nav">
-      <a href="index.html">Home</a>
-      <a href="community.html">Community</a>
-      <a href="members.html">Members</a>
-      <a href="chat.html">Chat Room</a>
-    </div>
-    
-    <div class="forum-main">
-      <div class="forum-content">
-        <!-- Existing forum content remains -->
-      </div>
-      
-      <div class="forum-sidebar">
-        <!-- Login and Registration -->
-        <div class="login-section">
-          <h4>Login</h4>
-          <div class="form-group">
-            <label for="login-username">Username</label>
-            <input type="text" id="login-username">
-          </div>
-          <div class="form-group">
-            <label for="login-password">Password</label>
-            <input type="password" id="login-password">
-          </div>
-          <div class="form-group">
-            <button id="login-button">Login</button>
-          </div>
-        </div>
-        
-        <div class="register-section">
-          <h4>Register</h4>
-          <div class="form-group">
-            <label for="register-username">Username</label>
-            <input type="text" id="register-username">
-          </div>
-          <div class="form-group">
-            <label for="register-email">Email</label>
-            <input type="email" id="register-email">
-          </div>
-          <div class="form-group">
-            <label for="register-password">Password</label>
-            <input type="password" id="register-password">
-          </div>
-          <div class="form-group">
-            <button id="register-button">Register</button>
-          </div>
-        </div>
-        
-        <!-- Existing sidebar content remains -->
-      </div>
-    </div>
-  </main>
-
-  <div class="chat-container">
-    <h3>Live Chat</h3>
-    <div class="audience-info" id="audience-count">
-      Live Audience: 0
-    </div>
-    <div class="chat-messages" id="chat-messages">
-      <!-- Chat messages will appear here -->
-    </div>
-    <div class="chat-input">
-      <input type="text" id="chat-input-field" placeholder="Type your message...">
-      <button id="send-message">Send</button>
-    </div>
-  </div>
+  <footer>
+    <a href="https://discord.gg/75hRp5BhTW  " target="_blank">👑 Spectrom Clover Kingdom 👑</a>
+    <a href="https://medal.tv/u/Spectrom47  " target="_blank">🎥 Latest Highlights 🎥</a>
+    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0  " target="_blank">🎵 Spotify Playlist 🎵</a>
+  </footer>
 
   <script>
-    // Existing tamagotchi code remains
+    // Tamagotchi variables
+    let hunger = 70;
+    let happiness = 80;
+    let health = 90;
     
-    // User authentication system
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    // Update status bars
+    function updateStatusBars() {
+      document.getElementById('hunger-bar').style.width = hunger + '%';
+      document.getElementById('happiness-bar').style.width = happiness + '%';
+      document.getElementById('health-bar').style.width = health + '%';
+    }
     
-    // Login functionality
-    document.getElementById('login-button').addEventListener('click', function() {
-      const username = document.getElementById('login-username').value;
-      const password = document.getElementById('login-password').value;
-      
-      const user = users.find(u => u.username === username && u.password === password);
-      
-      if (user) {
-        currentUser = user;
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        alert('Login successful!');
-      } else {
-        alert('Invalid username or password');
+    // Add bounce animation
+    function bounceFace() {
+      document.getElementById('tamagotchi-face').classList.add('bounce');
+      setTimeout(() => {
+        document.getElementById('tamagotchi-face').classList.remove('bounce');
+      }, 500);
+    }
+    
+    // Button click handlers
+    document.getElementById('feed-button').addEventListener('click', function() {
+      if (hunger < 100) {
+        hunger += 15;
+        if (hunger > 100) hunger = 100;
+        updateStatusBars();
+        bounceFace();
       }
     });
     
-    // Registration functionality
-    document.getElementById('register-button').addEventListener('click', function() {
-      const username = document.getElementById('register-username').value;
-      const email = document.getElementById('register-email').value;
-      const password = document.getElementById('register-password').value;
-      
-      if (!users.some(u => u.username === username)) {
-        users.push({ username, email, password });
-        localStorage.setItem('users', JSON.stringify(users));
-        alert('Account created! You can now login.');
-      } else {
-        alert('Username already exists');
+    document.getElementById('play-button').addEventListener('click', function() {
+      if (happiness < 100) {
+        happiness += 15;
+        if (happiness > 100) happiness = 100;
+        hunger -= 10;
+        if (hunger < 0) hunger = 0;
+        updateStatusBars();
+        bounceFace();
       }
     });
     
-    // Live chat functionality
-    let audienceCount = 0;
+    document.getElementById('heal-button').addEventListener('click', function() {
+      if (health < 100) {
+        health += 20;
+        if (health > 100) health = 100;
+        happiness -= 5;
+        if (happiness < 0) happiness = 0;
+        updateStatusBars();
+        bounceFace();
+      }
+    });
     
-    // Simulate audience joining/leaving every 5 seconds
-    setInterval(() => {
-      audienceCount = Math.floor(Math.random() * 20) + 1;
-      document.getElementById('audience-count').textContent = `Live Audience: ${audienceCount}`;
+    // Decrement stats over time
+    setInterval(function() {
+      hunger -= 1;
+      happiness -= 1;
+      health -= 0.5;
+      
+      if (hunger < 0) hunger = 0;
+      if (happiness < 0) happiness = 0;
+      if (health < 0) health = 0;
+      
+      updateStatusBars();
     }, 5000);
     
-    // Chat messages system
-    const chatMessages = document.getElementById('chat-messages');
-    
-    document.getElementById('send-message').addEventListener('click', sendMessage);
-    document.getElementById('chat-input-field').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') sendMessage();
-    });
-    
-    function sendMessage() {
-      const inputField = document.getElementById('chat-input-field');
-      const message = inputField.value.trim();
-      
-      if (message) {
-        const messageElement = document.createElement('div');
-        const username = currentUser ? currentUser.username : 'Anonymous';
-        
-        messageElement.innerHTML = `
-          <strong>${username}:</strong> ${message}
-          <small style="display:block;color:#66ffaa;margin-top:3px">${new Date().toLocaleTimeString()}</small>
-        `;
-        
-        chatMessages.appendChild(messageElement);
-        inputField.value = '';
-        
-        // Scroll to bottom of chat
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-    }
+    // Initialize status bars
+    updateStatusBars();
   </script>
 </body>
 </html>
