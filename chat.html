@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spectrom Hub - Chat Room</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Spectrom Hub - Live Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -12,13 +12,14 @@
       padding: 0;
     }
     body {
-      font-family: 'Source Sans Pro', sans-serif;
+      font-family: 'Press Start 2P', cursive, 'Source Sans Pro', sans-serif;
       background: #000e06;
-      background: radial-gradient(circle at top left, #0f0f0f, #0c2b1f 40%, #06140b);
+      background: linear-gradient(135deg, #0f0f0f, #0c2b1f);
       color: #A8FFBF;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow: hidden;
     }
     main {
       width: 100%;
@@ -26,66 +27,68 @@
       margin: auto;
       padding: 20px;
       background-color: rgba(10, 35, 20, 0.9);
-      border: 2px solid #33FF77;
-      border-radius: 12px;
-      box-shadow: 0 0 30px #00ff88;
+      border: 3px solid #00ff88;
+      border-radius: 15px;
+      box-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
     header {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 2rem;
       color: #33FF77;
+      text-shadow: 0 0 10px #00ff88;
       margin-bottom: 20px;
+      letter-spacing: 2px;
     }
-    .forum-nav {
-      background-color: #122f21;
-      border: 1px solid #33FF77;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
-    .forum-nav a {
-      display: inline-block;
-      color: #A8FFBF;
+    .user-count {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      color: #33FF77;
       text-align: center;
-      padding: 12px 16px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-    .forum-nav a:hover {
-      background-color: #33FF77;
-      color: #0c2b1f;
+      margin: 10px 0;
+      text-shadow: 0 0 10px #00ff88;
     }
     .chat-container {
       display: flex;
+      flex-grow: 1;
       gap: 20px;
+      overflow: hidden;
     }
     .chat-main {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
+      background: rgba(15, 38, 24, 0.8);
+      border-radius: 10px;
+      overflow: hidden;
     }
     .chat-header {
       background: #122f21;
       padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      border-bottom: 2px solid #33FF77;
     }
     .chat-area {
       background: #0f2618;
       border: 1px solid #33FF77;
-      border-radius: 10px;
+      flex-grow: 1;
       padding: 15px;
-      margin-bottom: 20px;
-      height: 400px;
       overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #33FF77 #0c2b1f;
     }
     .message {
       margin-bottom: 15px;
       padding-bottom: 15px;
       border-bottom: 1px solid #122f21;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .message.system-message {
+      background: rgba(51, 255, 119, 0.1);
     }
     .message-header {
       display: flex;
@@ -96,9 +99,8 @@
       font-weight: bold;
       color: #33FF77;
     }
-    .message-time {
-      color: #A8FFBF;
-      font-size: 0.8rem;
+    .message-sender.system-sender {
+      color: #FF5733;
     }
     .message-content {
       line-height: 1.4;
@@ -106,6 +108,9 @@
     .chat-input {
       display: flex;
       gap: 10px;
+      padding: 15px;
+      background: #122f21;
+      border-top: 2px solid #33FF77;
     }
     .chat-input textarea {
       flex-grow: 1;
@@ -115,7 +120,8 @@
       color: #A8FFBF;
       padding: 10px;
       resize: none;
-      height: 80px;
+      height: 60px;
+      font-family: 'Press Start 2P', cursive;
     }
     .chat-input button {
       padding: 10px 20px;
@@ -126,6 +132,7 @@
       font-weight: bold;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-family: 'Press Start 2P', cursive;
     }
     .chat-input button:hover {
       background-color: #33FF77;
@@ -137,6 +144,7 @@
       border: 1px solid #33FF77;
       border-radius: 10px;
       padding: 15px;
+      overflow-y: auto;
     }
     .online-users {
       margin-bottom: 20px;
@@ -146,6 +154,7 @@
       margin-bottom: 10px;
       padding-bottom: 5px;
       border-bottom: 1px solid #33FF77;
+      font-family: 'Orbitron', sans-serif;
     }
     .user-list {
       list-style-type: none;
@@ -153,12 +162,28 @@
     .user-list li {
       padding: 8px 0;
       border-bottom: 1px solid #122f21;
+      position: relative;
     }
     .user-list .online {
       color: #33FF77;
     }
     .user-list .offline {
       color: #FF5733;
+    }
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    .online::before {
+      content: '';
+      background-color: #33FF77;
+    }
+    .offline::before {
+      content: '';
+      background-color: #FF5733;
     }
     footer {
       position: fixed;
@@ -169,8 +194,8 @@
       justify-content: space-around;
       align-items: center;
       padding: 15px 10px;
-      border-top: 2px solid #33FF77;
-      box-shadow: 0 -2px 20px #00ff88;
+      border-top: 3px solid #00ff88;
+      box-shadow: 0 -5px 25px rgba(0, 255, 136, 0.3);
       z-index: 999;
     }
     footer a {
@@ -181,11 +206,24 @@
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
+      font-family: 'Orbitron', sans-serif;
     }
     footer a:hover {
       background-color: #005533;
       color: #ffffff;
       border-radius: 5px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .floating {
+      animation: float 3s ease-in-out infinite;
     }
   </style>
 </head>
@@ -193,13 +231,8 @@
   <main>
     <header>
       <h1>Chat Room - Spectrom Hub</h1>
+      <div class="user-count" id="user-count">Users Online: 0</div>
     </header>
-    <div class="forum-nav">
-      <a href="index.html">Home</a>
-      <a href="community.html">Community</a>
-      <a href="members.html">Members</a>
-      <a href="chat.html">Chat Room</a>
-    </div>
     
     <div class="chat-container">
       <div class="chat-main">
@@ -209,55 +242,33 @@
         </div>
         
         <div class="chat-area" id="chat-area">
-          <div class="message">
+          <div class="message system-message">
             <div class="message-header">
-              <span class="message-sender">System</span>
+              <span class="message-sender system-sender">SYSTEM</span>
               <span class="message-time">12:00 PM</span>
             </div>
-            <div class="message-content">
+            <div class="message-content floating">
               Welcome to the Spectrom Hub Chat Room! Please introduce yourself to the community.
-            </div>
-          </div>
-          
-          <div class="message">
-            <div class="message-header">
-              <span class="message-sender">Tomahawk</span>
-              <span class="message-time">12:05 PM</span>
-            </div>
-            <div class="message-content">
-              Hello everyone! I'm Tomahawk, the founder of this community. How can I assist you today?
-            </div>
-          </div>
-          
-          <div class="message">
-            <div class="message-header">
-              <span class="message-sender">System</span>
-              <span class="message-time">12:05 PM</span>
-            </div>
-            <div class="message-content">
-              Tomahawk has joined the chat.
             </div>
           </div>
         </div>
         
         <div class="chat-input">
           <textarea id="message-input" placeholder="Type your message here..."></textarea>
-          <button id="send-button">Send</button>
+          <button id="send-button">SEND</button>
         </div>
       </div>
       
       <div class="chat-sidebar">
         <div class="online-users">
-          <h4>Online Users</h4>
-          <ul class="user-list">
-            <li class="online">Tomahawk <span class="status online">Online</span></li>
-            <li class="offline">Guest123 <span class="status offline">Offline</span></li>
-            <li class="offline">NewMember <span class="status offline">Offline</span></li>
+          <h4>ONLINE USERS</h4>
+          <ul class="user-list" id="user-list">
+            <!-- Users will be added dynamically -->
           </ul>
         </div>
         
         <div class="online-users">
-          <h4>Chat Rules</h4>
+          <h4>CHAT RULES</h4>
           <ul class="user-list">
             <li>Be respectful to all members</li>
             <li>No spamming or flooding</li>
@@ -270,27 +281,33 @@
   </main>
 
   <footer>
-    <a href="https://discord.gg/75hRp5BhTW" target="_blank">👑 Spectrom Clover Kingdom 👑</a>
-    <a href="https://medal.tv/u/Spectrom47" target="_blank">🎥 Latest Highlights 🎥</a>
-    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">🎵 Spotify Playlist 🎵</a>
+    <a href="https://discord.gg/75hRp5BhTW" target="_blank">👑 SPECTROM CLOVER KINGDOM 👑</a>
+    <a href="https://medal.tv/u/Spectrom47" target="_blank">🎥 LATEST HIGHLIGHTS 🎥</a>
+    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">🎵 SPOTIFY PLAYLIST 🎵</a>
   </footer>
 
   <script>
-    // Get DOM elements
+    // Global variables
+    let users = [];
+    let userCount = 0;
+    
+    // DOM elements
     const chatArea = document.getElementById('chat-area');
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');
+    const userList = document.getElementById('user-list');
+    const userCountDisplay = document.getElementById('user-count');
     
-    // Function to add a new message to the chat
-    function addMessage(sender, content, time, isSystem = false) {
-      const messageClass = isSystem ? 'message system-message' : 'message';
-      const senderClass = isSystem ? 'message-sender system-sender' : 'message-sender';
+    // Add system message
+    function addSystemMessage(content) {
+      const currentTime = new Date();
+      const timeString = `${currentTime.getHours()}:${String(currentTime.getMinutes()).padStart(2, '0')}`;
       
       const messageHTML = `
-        <div class="${messageClass}">
+        <div class="message system-message">
           <div class="message-header">
-            <span class="${senderClass}">${sender}</span>
-            <span class="message-time">${time}</span>
+            <span class="message-sender system-sender">SYSTEM</span>
+            <span class="message-time">${timeString}</span>
           </div>
           <div class="message-content">
             ${content}
@@ -302,34 +319,104 @@
       chatArea.scrollTop = chatArea.scrollHeight;
     }
     
-    // Function to send a message
+    // Add user message
+    function addMessage(sender, content, isSystem = false) {
+      const currentTime = new Date();
+      const timeString = `${currentTime.getHours()}:${String(currentTime.getMinutes()).padStart(2, '0')}`;
+      
+      const messageClass = isSystem ? 'message system-message' : 'message';
+      const senderClass = isSystem ? 'message-sender system-sender' : 'message-sender';
+      
+      const messageHTML = `
+        <div class="${messageClass}">
+          <div class="message-header">
+            <span class="${senderClass}">${sender}</span>
+            <span class="message-time">${timeString}</span>
+          </div>
+          <div class="message-content">
+            ${content}
+          </div>
+        </div>
+      `;
+      
+      chatArea.insertAdjacentHTML('beforeend', messageHTML);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+    
+    // Update user count display
+    function updateUserCount() {
+      userCount = users.length;
+      userCountDisplay.textContent = `Users Online: ${userCount}`;
+    }
+    
+    // Add user to the list
+    function addUser(username) {
+      if (!users.includes(username)) {
+        users.push(username);
+        updateUserList();
+        updateUserCount();
+        addSystemMessage(`${username} has joined the chat!`);
+      }
+    }
+    
+    // Remove user from the list
+    function removeUser(username) {
+      const index = users.indexOf(username);
+      if (index > -1) {
+        users.splice(index, 1);
+        updateUserList();
+        updateUserCount();
+        addSystemMessage(`${username} has left the chat.`);
+      }
+    }
+    
+    // Update the user list display
+    function updateUserList() {
+      userList.innerHTML = '';
+      users.forEach(user => {
+        const li = document.createElement('li');
+        li.className = 'online';
+        li.textContent = user;
+        userList.appendChild(li);
+      });
+    }
+    
+    // Simulate random users joining and leaving
+    function simulateActivity() {
+      const names = ['GamerPro', 'RobloxMaster', 'DiscordDev', 'PixelArtist', 'CodeWizard'];
+      setInterval(() => {
+        if (Math.random() > 0.7 && userCount < 10) {
+          const randomName = names[Math.floor(Math.random() * names.length)];
+          addUser(randomName);
+        } else if (Math.random() > 0.8 && userCount > 0) {
+          const randomIndex = Math.floor(Math.random() * userCount);
+          removeUser(users[randomIndex]);
+        }
+      }, 5000);
+    }
+    
+    // Send message function
     function sendMessage() {
       const message = messageInput.value.trim();
       if (message) {
-        const currentTime = new Date();
-        const timeString = `${currentTime.getHours()}:${String(currentTime.getMinutes()).padStart(2, '0')}`;
-        
-        addMessage('You', message, timeString);
+        if (users.length === 0) {
+          addUser('Anonymous');
+        }
+        addMessage(users[0] || 'Anonymous', message);
         messageInput.value = '';
         
-        // Simulate a response from another user after 1-3 seconds
-        const responseTime = 1000 + Math.random() * 2000;
+        // Simulate response
         setTimeout(() => {
           const responses = [
-            'That\'s interesting!',
-            'I agree with you.',
-            'Can you tell me more about that?',
-            'Thanks for sharing!',
-            'I\'ve experienced something similar.'
+            'Nice one!',
+            'Same here!',
+            'Cool story!',
+            'Interesting...',
+            'I agree!',
+            'Tell me more!'
           ];
-          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-          
-          addMessage(
-            Math.random() > 0.5 ? 'Community Member' : 'Another User', 
-            randomResponse, 
-            `${timeString.split(':')[0]}:${String(parseInt(timeString.split(':')[1]) + 1).padStart(2, '0')}`
-          );
-        }, responseTime);
+          addMessage('Community Member', responses[Math.floor(Math.random() * responses.length)]);
+        }, 1000 + Math.random() * 2000);
       }
     }
     
@@ -340,6 +427,15 @@
         sendMessage();
       }
     });
+    
+    // Initialize with some users
+    simulateActivity();
+    addUser('Tomahawk');
+
+    // Add some initial messages
+    setTimeout(() => {
+      addMessage('Tomahawk', 'Welcome to Spectrom Hub! How can I help you today?');
+    }, 1000);
   </script>
 </body>
 </html>
