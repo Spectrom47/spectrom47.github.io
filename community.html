@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Community - Spectrom Hub Forums</title>
+  <title>Community Page</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -212,26 +212,6 @@
       border-bottom: 1px solid var(--bright-blue);
     }
 
-    .user-list {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .user-list .avatar {
-      width: 30px;
-      height: 30px;
-      background-color: var(--header-bg);
-      border: 2px solid var(--bright-blue);
-      border-radius: 50%;
-      margin-right: 10px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--light-green);
-      font-size: 16px;
-    }
-
     footer {
       position: fixed;
       bottom: 0;
@@ -307,22 +287,62 @@
     /* Discord Widget */
     .discord-widget {
       width: 100%;
-      height: 300px;
+      height: 180px;
       background-color: var(--header-bg);
       border: 1px solid var(--bright-blue);
       border-radius: 10px;
       margin-top: 20px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       color: var(--light-green);
       text-align: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     .discord-widget h4 {
       color: var(--bright-blue);
       margin-bottom: 10px;
+    }
+
+    .discord-widget .discord-logo {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 10px;
+    }
+
+    /* Random Fact Image */
+    .fact-image {
+      background: var(--forum-bg);
+      border: 1px solid var(--bright-blue);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .fact-image h3 {
+      color: var(--bright-blue);
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--bright-blue);
+    }
+
+    .fact-container {
+      position: relative;
+      height: 300px; /* Adjust height as needed */
+      overflow: hidden;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fact-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
   </style>
 </head>
@@ -364,10 +384,10 @@
           <h3>Community Events</h3>
           <p>Check out our upcoming community events:</p>
           <ul>
-            <li>Weekly gaming sessions - Sundays at 8 PM</li>
-            <li>Monthly Q&A with the founder</li>
-            <li>Seasonal contests and giveaways</li>
-            <li>Collaboration projects with members</li>
+            <li>Monthly Creator Showcase</li>
+            <li>Weekly Creative Challenges</li>
+            <li>Seasonal Contests and Giveaways</li>
+            <li>Collaboration Projects with Members</li>
           </ul>
         </div>
         
@@ -376,17 +396,24 @@
           <p>Meet our featured community members:</p>
           <div class="member-grid">
             <div class="member-card">
-              <div class="member-avatar">G</div>
-              <p>GamingPro</p>
+              <div class="member-avatar">S</div>
+              <p style="font-weight: bold; font-size: 16px;"><a href="https://guns.lol/spectrom" target="_blank">Spectrom</a></p>
             </div>
             <div class="member-card">
-              <div class="member-avatar">C</div>
-              <p>CodingNinja</p>
+              <div class="member-avatar">K</div>
+              <p style="font-weight: bold; font-size: 16px;"><a href="https://discord.gg/DDYKXDyVk5" target="_blank">Kurffew</a></p>
             </div>
             <div class="member-card">
-              <div class="member-avatar">A</div>
-              <p>ArtisticMind</p>
+              <div class="member-avatar">N</div>
+              <p style="font-weight: bold; font-size: 16px;"><a href="https://discord.gg/CysXKcVrQ8" target="_blank">Sensifi</a></p>
             </div>
+          </div>
+        </div>
+
+        <div class="fact-image">
+          <h3>Random Fact Image</h3>
+          <div class="fact-container">
+            <img src="https://img.freepik.com/free-vector/simple-vibing-cat-square-meme_742173-4493.jpg?t=st=1748580758~exp=1748584358~hmac=68ff008d0a75c0b963718dd1614159e52ddcf048b9d01887a9ed036133623a86&w=1380" alt="Random Fact">
           </div>
         </div>
       </div>
@@ -395,12 +422,9 @@
         <div class="user-info">
           <h4>Welcome!</h4>
           <div class="user-profile">
-            <div class="user-avatar">T</div>
-            <h4>Tomahawk</h4>
-            <p>Owner</p>
-            <p>0 Posts</p>
-            <p>Account</p>
-            <p>Logout</p>
+            <div class="user-avatar">👥</div>
+            <h4>Public Visitor</h4>
+            <p>Guest</p>
           </div>
         </div>
         
@@ -413,7 +437,7 @@
         
         <div class="online-users">
           <h4>Popular Community Threads</h4>
-          <ul>
+          <ul style="list-style-type: disc; padding-left: 20px;">
             <li>Welcome to the Community!</li>
             <li>Introduction Thread</li>
             <li>Favorite Games Discussion</li>
@@ -422,8 +446,11 @@
         </div>
 
         <div class="discord-widget">
+          <svg class="discord-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+            <path fill="#7289DA" d="M560.285 873.32c-11.063-4.36-20.614-16.623-26.618-28.835l-37.92-155.555c-5.506-22.609-5.506-46.042 0-68.651l37.919-155.555c5.998-12.202 15.53-24.46 26.618-28.825l37.919 155.555c5.506-22.609 5.506-46.042 0-68.651l-37.919-155.555c-5.998-12.212-15.555-24.466-26.618-28.835-11.063-4.369-24.504-4.369-35.567 0-11.062 4.363-20.619 16.623-26.618 28.825l-37.919 155.555c-5.506 22.609-5.506 46.042 0 68.651l37.919 155.555c5.998 12.202 15.53 24.46 26.618 28.825 11.063 4.36 24.504 4.36 35.567 0zm170.084-223.27c-7.659-36.374-28.074-67.743-57.178-87.265l-37.918-155.558c-26.619-116.475-104.479-195.464-196.343-195.464-163.626 0-297.475 183.624-297.475 183.624s80.567-135.079 233.873-135.079c46.164 0 87.778 19.084 121.877 50.924l37.918 155.558c29.134 19.548 49.514 50.893 57.178 87.265 7.701 36.416 7.701 76.174 0 112.59-7.701 36.42-38.045 66.146-77.139 66.146-17.956 0-36.767-4.363-52.245-12.203l-37.919-155.555c-29.135-116.476-105.848-195.464-197.861-195.464-165.93 0-297.475 185.948-297.475 185.948s80.071-136.344 235.078-136.344c67.441 0 123.167 38.764 156.298 92.226l37.919 155.555c7.701 32.194 7.701 65.78 0 97.974z"/>
+          </svg>
           <h4>Join Our Discord Server</h4>
-          <p>Connect with our community in real-time. Join discussions, share ideas, and meet fellow members.</p>
+          <p>Connect with our community in real-time</p>
           <a href="https://discord.gg/75hRp5BhTW" target="_blank" style="margin-top: 15px; display: inline-block; padding: 8px 16px; background-color: var(--bright-blue); color: var(--primary-black); text-decoration: none; border-radius: 5px; font-weight: bold;">Join Now</a>
         </div>
       </div>
@@ -494,10 +521,7 @@
       // In a real implementation, use the Discord API with your server ID
       // Here's a mock response for demonstration
       return [
-        { username: 'GamingPro', status: 'online' },
-        { username: 'CodingNinja', status: 'online' },
-        { username: 'ArtisticMind', status: 'idle' },
-        { username: 'MusicLover', status: 'online' }
+        { username: 'ArtisticMind', status: 'idle' }
       ];
     }
 
