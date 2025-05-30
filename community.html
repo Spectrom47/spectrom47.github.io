@@ -6,145 +6,335 @@
   <title>Community - Spectrom Hub Forums</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-black: #000000;
+      --dark-blue: #0a192f;
+      --royal-blue: #112240;
+      --bright-blue: #64ffda;
+      --neon-green: #33FF77;
+      --light-green: #A8FFBF;
+      --forum-bg: #0f2618;
+      --header-bg: #122f21;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     body {
       font-family: 'Source Sans Pro', sans-serif;
-      background: #000e06;
-      background: radial-gradient(circle at top left, #0f0f0f, #0c2b1f 40%, #06140b);
-      color: #A8FFBF;
+      background: var(--primary-black);
+      background: radial-gradient(circle at top left, var(--dark-blue), var(--primary-black) 40%, var(--royal-blue));
+      color: var(--light-green);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
+
+    /* Top Banner */
+    .top-banner {
+      background: linear-gradient(to right, var(--dark-blue), var(--royal-blue));
+      padding: 15px;
+      text-align: center;
+      color: var(--bright-blue);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--bright-blue);
+      box-shadow: 0 0 15px var(--bright-blue);
+    }
+
     main {
       width: 100%;
       max-width: 1200px;
-      margin: auto;
+      margin: 20px auto;
       padding: 20px;
-      background-color: rgba(10, 35, 20, 0.9);
-      border: 2px solid #33FF77;
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 2px solid var(--bright-blue);
       border-radius: 12px;
-      box-shadow: 0 0 30px #00ff88;
+      box-shadow: 0 0 30px var(--neon-green);
     }
+
     header {
       margin-bottom: 20px;
     }
+
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 2rem;
-      color: #33FF77;
+      color: var(--bright-blue);
       margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 0 0 10px var(--neon-green);
     }
+
     .forum-nav {
-      background-color: #122f21;
-      border: 1px solid #33FF77;
+      background-color: var(--header-bg);
+      border: 1px solid var(--bright-blue);
       border-radius: 5px;
       margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
     }
+
     .forum-nav a {
       display: inline-block;
-      color: #A8FFBF;
+      color: var(--light-green);
       text-align: center;
       padding: 12px 16px;
       text-decoration: none;
       font-weight: bold;
       transition: all 0.3s ease;
+      width: 25%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+
     .forum-nav a:hover {
-      background-color: #33FF77;
-      color: #0c2b1f;
+      background-color: var(--bright-blue);
+      color: var(--primary-black);
+      transform: scale(1.05);
     }
+
     .forum-main {
       display: flex;
       gap: 20px;
     }
+
     .forum-content {
       flex-grow: 1;
     }
+
     .forum-section {
-      background: #0f2618;
-      border: 1px solid #33FF77;
+      background: var(--forum-bg);
+      border: 1px solid var(--bright-blue);
       border-radius: 10px;
       padding: 15px;
       margin-bottom: 20px;
+      transition: transform 0.3s ease;
     }
+
+    .forum-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
     .forum-section h3 {
-      color: #33FF77;
+      color: var(--bright-blue);
       margin-bottom: 10px;
       padding-bottom: 5px;
-      border-bottom: 1px solid #33FF77;
+      border-bottom: 1px solid var(--bright-blue);
+      display: flex;
+      align-items: center;
     }
-    .forum-table {
-      width: 100%;
-      border-collapse: collapse;
+
+    .forum-section h3::before {
+      content: "✓";
+      margin-right: 10px;
+      font-size: 1.2rem;
     }
-    .forum-table th {
-      background-color: #122f21;
-      color: #33FF77;
-      padding: 10px;
-      text-align: left;
+
+    .forum-section ul {
+      padding-left: 20px;
+      margin-top: 10px;
     }
-    .forum-table td {
-      padding: 10px;
-      border-bottom: 1px solid #122f21;
+
+    .forum-section li {
+      margin-bottom: 8px;
     }
+
+    .forum-section .member-grid {
+      display: flex;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .forum-section .member-card {
+      text-align: center;
+      flex: 1;
+    }
+
+    .forum-section .member-avatar {
+      width: 80px;
+      height: 80px;
+      background-color: var(--header-bg);
+      border: 2px solid var(--bright-blue);
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--light-green);
+      font-size: 24px;
+    }
+
     .forum-sidebar {
       width: 250px;
-      background: #0f2618;
-      border: 1px solid #33FF77;
+      background: var(--forum-bg);
+      border: 1px solid var(--bright-blue);
       border-radius: 10px;
       padding: 15px;
     }
+
     .user-info {
       margin-bottom: 20px;
+      text-align: center;
     }
+
     .user-info h4 {
-      color: #33FF77;
+      color: var(--bright-blue);
       margin-bottom: 5px;
     }
+
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      background-color: var(--header-bg);
+      border: 2px solid var(--bright-blue);
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--light-green);
+      font-size: 24px;
+    }
+
     .online-users {
       margin-bottom: 20px;
     }
+
     .online-users h4 {
-      color: #33FF77;
+      color: var(--bright-blue);
       margin-bottom: 10px;
       padding-bottom: 5px;
-      border-bottom: 1px solid #33FF77;
+      border-bottom: 1px solid var(--bright-blue);
     }
+
+    .user-list {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .user-list .avatar {
+      width: 30px;
+      height: 30px;
+      background-color: var(--header-bg);
+      border: 2px solid var(--bright-blue);
+      border-radius: 50%;
+      margin-right: 10px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--light-green);
+      font-size: 16px;
+    }
+
     footer {
       position: fixed;
       bottom: 0;
       width: 100%;
-      background: rgba(10, 35, 20, 0.95);
+      background: var(--royal-blue);
       display: flex;
       justify-content: space-around;
       align-items: center;
       padding: 15px 10px;
-      border-top: 2px solid #33FF77;
-      box-shadow: 0 -2px 20px #00ff88;
+      border-top: 2px solid var(--bright-blue);
+      box-shadow: 0 -2px 20px var(--neon-green);
       z-index: 999;
     }
+
     footer a {
-      color: #A8FFBF;
+      color: var(--light-green);
       padding: 10px;
       text-align: center;
       min-width: 150px;
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    footer a span {
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+
     footer a:hover {
-      background-color: #005533;
-      color: #ffffff;
-      border-radius: 5px;
+      transform: translateY(-5px);
+    }
+
+    /* Stars in background */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background-color: var(--bright-blue);
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
+
+    /* Bottom Banner */
+    .bottom-banner {
+      background: linear-gradient(to right, var(--royal-blue), var(--dark-blue));
+      padding: 15px;
+      text-align: center;
+      color: var(--bright-blue);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      border-top: 2px solid var(--bright-blue);
+      box-shadow: 0 0 15px var(--bright-blue);
+      margin-top: 20px;
+    }
+
+    /* Discord Widget */
+    .discord-widget {
+      width: 100%;
+      height: 300px;
+      background-color: var(--header-bg);
+      border: 1px solid var(--bright-blue);
+      border-radius: 10px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--light-green);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .discord-widget h4 {
+      color: var(--bright-blue);
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
+  <!-- Stars background -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Top Banner -->
+  <div class="top-banner">
+    WELCOME TO THE SPECTROM HUB COMMUNITY!
+  </div>
+
   <main>
     <header>
       <h1>Community - Spectrom Hub Forums</h1>
@@ -184,18 +374,18 @@
         <div class="forum-section">
           <h3>Community Spotlight</h3>
           <p>Meet our featured community members:</p>
-          <div style="display: flex; gap: 20px; margin-top: 10px;">
-            <div style="text-align: center;">
-              <img src="avatar1.png" alt="Community Member" style="width: 80px; height: 80px; border-radius: 50%;">
-              <p style="margin-top: 5px;">GamingPro</p>
+          <div class="member-grid">
+            <div class="member-card">
+              <div class="member-avatar">G</div>
+              <p>GamingPro</p>
             </div>
-            <div style="text-align: center;">
-              <img src="avatar2.png" alt="Community Member" style="width: 80px; height: 80px; border-radius: 50%;">
-              <p style="margin-top: 5px;">CodingNinja</p>
+            <div class="member-card">
+              <div class="member-avatar">C</div>
+              <p>CodingNinja</p>
             </div>
-            <div style="text-align: center;">
-              <img src="avatar3.png" alt="Community Member" style="width: 80px; height: 80px; border-radius: 50%;">
-              <p style="margin-top: 5px;">ArtisticMind</p>
+            <div class="member-card">
+              <div class="member-avatar">A</div>
+              <p>ArtisticMind</p>
             </div>
           </div>
         </div>
@@ -203,9 +393,9 @@
       
       <div class="forum-sidebar">
         <div class="user-info">
-          <h4>Login or Register</h4>
+          <h4>Welcome!</h4>
           <div class="user-profile">
-            <img src="avatar.png" alt="User Avatar" style="width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px;">
+            <div class="user-avatar">T</div>
             <h4>Tomahawk</h4>
             <p>Owner</p>
             <p>0 Posts</p>
@@ -215,10 +405,9 @@
         </div>
         
         <div class="online-users">
-          <h4>Online users (1)</h4>
-          <div class="user-list">
-            <img src="avatar.png" alt="Online User" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
-            <span>Tomahawk - Currently browsing</span>
+          <h4>Live Online Users</h4>
+          <div class="user-list" id="online-users-list">
+            <!-- Online users will be populated here by JavaScript -->
           </div>
         </div>
         
@@ -231,14 +420,109 @@
             <li>Community Feedback</li>
           </ul>
         </div>
+
+        <div class="discord-widget">
+          <h4>Join Our Discord Server</h4>
+          <p>Connect with our community in real-time. Join discussions, share ideas, and meet fellow members.</p>
+          <a href="https://discord.gg/75hRp5BhTW" target="_blank" style="margin-top: 15px; display: inline-block; padding: 8px 16px; background-color: var(--bright-blue); color: var(--primary-black); text-decoration: none; border-radius: 5px; font-weight: bold;">Join Now</a>
+        </div>
       </div>
     </div>
   </main>
 
+  <!-- Bottom Banner -->
+  <div class="bottom-banner">
+    JOIN OUR COMMUNITY AND EXPLORE THE DIGITAL WORLD TOGETHER!
+  </div>
+
   <footer>
-    <a href="https://discord.gg/75hRp5BhTW" target="_blank">👑 Spectrom Clover Kingdom 👑</a>
-    <a href="https://medal.tv/u/Spectrom47" target="_blank">🎥 Latest Highlights 🎥</a>
-    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">🎵 Spotify Playlist 🎵</a>
+    <a href="https://discord.gg/75hRp5BhTW" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 16L12 12L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Discord Server</span>
+    </a>
+    <a href="https://medal.tv/u/Spectrom47" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Latest Highlights</span>
+    </a>
+    <a href="https://open.spotify.com/playlist/3xrdIeXbTfN0c9Togu2pa0" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 16V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Spotify Playlist</span>
+    </a>
   </footer>
+
+  <script>
+    // Create stars background
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const starCount = 100;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 3;
+        
+        star.style.left = `${x}%`;
+        star.style.top = `${y}%`;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        // Random delay for animation
+        star.style.animationDelay = `${Math.random() * 2}s`;
+        
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Mock Discord API - Replace with actual API calls
+    async function fetchOnlineUsers() {
+      // In a real implementation, use the Discord API with your server ID
+      // Here's a mock response for demonstration
+      return [
+        { username: 'GamingPro', status: 'online' },
+        { username: 'CodingNinja', status: 'online' },
+        { username: 'ArtisticMind', status: 'idle' },
+        { username: 'MusicLover', status: 'online' }
+      ];
+    }
+
+    async function displayOnlineUsers() {
+      const users = await fetchOnlineUsers();
+      const usersList = document.getElementById('online-users-list');
+      
+      users.forEach(user => {
+        if (user.status === 'online') {
+          const userElement = document.createElement('div');
+          userElement.className = 'user-list';
+          userElement.innerHTML = `
+            <div class="avatar">${user.username.charAt(0)}</div>
+            <span>${user.username} - Online</span>
+          `;
+          usersList.appendChild(userElement);
+        }
+      });
+    }
+
+    // Initialize page
+    window.addEventListener('DOMContentLoaded', () => {
+      createStars();
+      displayOnlineUsers();
+    });
+  </script>
 </body>
 </html>
