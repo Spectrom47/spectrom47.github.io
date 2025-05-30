@@ -1,155 +1,535 @@
-<!-- chatroom.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Chatroom</title>
+    <title>SDK Interactive</title>
     <style>
-        body {
+        /* Base styles */
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            height: 100vh;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles */
+        .top-bar {
             display: flex;
-            flex-direction: column;
+            justify-content: flex-end;
+            padding: 8px 5%;
+            background-color: rgba(10, 25, 47, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            border: 1px solid #ccc;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        .chat-header {
-            background-color: #4A90E2;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background-color: #f5f5f5;
-        }
-
-        .message {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            max-width: 80%;
-        }
-
-        .user-message {
-            background-color: #4A90E2;
-            color: white;
-            margin-left: auto;
-            animation: fadeIn 0.3s;
-        }
-
-        .other-message {
-            background-color: #e0e0e0;
-            color: #333;
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .chat-input {
-            display: flex;
-            padding: 15px;
-            background-color: white;
-            border-top: 1px solid #ccc;
-        }
-
-        #messageInput {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        #sendButton {
-            padding: 10px 20px;
-            background-color: #4A90E2;
-            color: white;
-            border: none;
-            border-radius: 5px;
+        
+        .join-btn {
+            background: transparent;
+            color: #64ffda;
+            border: 2px solid #64ffda;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
         }
-
-        #sendButton:hover {
-            background-color: #3A80D2;
+        
+        .join-btn:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+        
+        .join-btn::before {
+            content: "🎉";
+            margin-right: 8px;
+        }
+        
+        /* Logo and nav container */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(10, 25, 47, 0.9);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(100, 255, 218, 0.1) 50%, transparent 100%);
+            transform: skewY(-5deg);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #64ffda 0%, #0acfb7 100%);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(100, 255, 218, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); }
+        }
+        
+        .logo-img::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            width: 70%;
+            height: 70%;
+            border: 2px solid #0a192f;
+            border-radius: 50%;
+            animation: rotate 5s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .logo-text h1 {
+            color: #64ffda;
+            font-size: 32px;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .logo-text p {
+            color: #8892b0;
+            font-size: 16px;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Navigation styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+            z-index: 2;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: #ccd6f6;
+            text-decoration: none;
+            font-size: 15px;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #64ffda;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #64ffda;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .coming-soon {
+            color: #ff6b6b !important;
+            cursor: not-allowed !important;
+        }
+        
+        .coming-soon::after {
+            background-color: #ff6b6b !important;
+        }
+        
+        /* Main content styles */
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            padding: 60px 5%;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(17, 34, 64, 0.7) 100%);
+            z-index: 0;
+        }
+        
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            width: 70%;
+            z-index: 1;
+        }
+        
+        .service-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px;
+            width: calc(33.33% - 30px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .service-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .service-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #64ffda 0%, #0acfb7 100%);
+            border-radius: 50%;
+            margin-bottom: 15px;
+            color: #0a192f;
+            font-size: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+        
+        .service-item:hover .service-icon {
+            transform: rotate(360deg);
+            box-shadow: 0 8px 20px rgba(100, 255, 218, 0.5);
+        }
+        
+        .service-item p {
+            text-align: center;
+            font-size: 12px;
+            color: #ccd6f6;
+            transition: color 0.3s ease;
+        }
+        
+        .service-item:hover p {
+            color: #64ffda;
+        }
+        
+        .tagline {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tagline h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #64ffda 0%, #0acfb7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: textGlow 3s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(100, 255, 218, 0.8), 0 0 30px rgba(100, 255, 218, 0.6);
+            }
+        }
+        
+        .tagline p {
+            color: #64ffda;
+            font-size: 28px;
+            font-style: italic;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        /* Team image */
+        .team-image {
+            width: 100%;
+            padding: 80px 15%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+        }
+        
+        .team-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(100, 255, 218, 0.1) 10px,
+                rgba(100, 255, 218, 0.1) 20px
+            ),
+            repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 10px,
+                rgba(100, 255, 218, 0.1) 10px,
+                rgba(100, 255, 218, 0.1) 20px
+            );
+        }
+        
+        .team-container {
+            position: relative;
+            z-index: 2;
+            height: 300px;
+            border: 10px solid white;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: float 6s ease-in-out infinite;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotateX(5deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateX(-5deg);
+            }
+            100% {
+                transform: translateY(0) rotateX(5deg);
+            }
+        }
+        
+        .team-image img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        /* About section */
+        .about {
+            padding: 50px 5%;
+            background-color: #f5f5f5;
+            color: #222;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaef 100%);
+            z-index: 0;
+        }
+        
+        .about-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .about h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #222;
+            font-weight: 600;
+        }
+        
+        .about p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .discord-link {
+            color: #64ffda;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .discord-link:hover {
+            text-decoration: underline;
+            transform: translateX(5px);
+            color: #0acfb7;
+        }
+        
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0a192f;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #64ffda;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0acfb7;
         }
     </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">Simple Chatroom</div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input">
-            <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off">
-            <button id="sendButton">Send</button>
+    <div class="top-bar">
+        <button class="join-btn" onclick="window.location.href='https://discord.gg/75hRp5BhTW'">Join today!</button>
+    </div>
+    
+    <div class="header-container">
+        <div class="logo">
+            <div class="logo-img"></div>
+            <div class="logo-text">
+                <h1>SDK Interactive</h1>
+                <p>TECHNOLOGIES</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#" class="coming-soon">Products & Services</a></li>
+                <li><a href="community.html">About Us</a></li>
+                <li><a href="index.html">Forum</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="main-content">
+        <div class="services">
+            <div class="service-item" style="animation-delay: 0.1s">
+                <div class="service-icon">🛡️</div>
+                <p>Discord Server Security</p>
+            </div>
+            
+            <div class="service-item" style="animation-delay: 0.2s">
+                <div class="service-icon">👥</div>
+                <p>Community Management</p>
+            </div>
+            
+            <div class="service-item" style="animation-delay: 0.3s">
+                <div class="service-icon">🔒</div>
+                <p>Role Management System</p>
+            </div>
+        </div>
+        
+        <div class="tagline">
+            <h2>Forum Based Solutions</h2>
+            <p>Best Discord Iteration Around!</p>
         </div>
     </div>
-
+    
+    <div class="team-image">
+        <div class="team-container">
+            <img src="https://i.imgur.com/J07rd7y.jpg" alt="Team Image">
+        </div>
+    </div>
+    
+    <div class="about">
+        <div class="about-content">
+            <h2>Who is SDK Interactive</h2>
+            <p>SDK Interactive is a forum-based platform that works in relation to Discord. Our interactive system helps users level up by participating in community activities, unlocking exclusive rewards and privileges as they progress. Our platform offers gamified experiences that encourage engagement and build vibrant communities.</p>
+            <p>With features like role management, custom leveling systems, and community governance tools, SDK Interactive transforms ordinary Discord servers into dynamic, engaging spaces where users feel motivated to contribute and participate. Our goal is to provide the best Discord experience by combining community management tools with gamification elements that keep users coming back.</p>
+            <p>Whether you're managing a gaming community, professional network, or hobby group, SDK Interactive provides the tools you need to foster connection and growth. <a href="https://discord.gg/75hRp5BhTW" class="discord-link">Learn more about our features</a>.</p>
+        </div>
+    </div>
+    
     <script>
-        // FastAPI server URL
-        const API_URL = 'http://localhost:8000/messages';
-        
-        // DOM Elements
-        const chatMessages = document.getElementById('chatMessages');
-        const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-
-        // Function to send message
-        async function sendMessage() {
-            const message = messageInput.value.trim();
-            if (message) {
-                await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ text: message })
-                });
-                messageInput.value = '';
-            }
-        }
-
-        // Function to get messages
-        async function getMessages() {
-            const response = await fetch(API_URL);
-            const messages = await response.json();
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceItems = document.querySelectorAll('.service-item');
             
-            chatMessages.innerHTML = '';
-            messages.forEach(msg => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message user-message'; // Always shows as user message in this simple version
-                messageDiv.textContent = msg.text;
-                chatMessages.appendChild(messageDiv);
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            serviceItems.forEach(item => {
+                observer.observe(item);
             });
-        }
-
-        // Event Listeners
-        sendButton.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
+            
+            // Add hover effect to logo
+            const logo = document.querySelector('.logo');
+            logo.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+            });
+            
+            logo.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
-
-        // Initial load and refresh every 1 second
-        getMessages();
-        setInterval(getMessages, 1000);
     </script>
 </body>
 </html>
