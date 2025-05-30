@@ -1,219 +1,605 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>OpenForum Chat Room</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #101820;
-      color: #f1f1f1;
-      display: flex;
-      height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDK Interactive - Chatroom</title>
+    <style>
+        :root {
+            --primary-black: #000000;
+            --dark-blue: #0a192f;
+            --royal-blue: #112240;
+            --bright-blue: #64ffda;
+            --neon-green: #33FF77;
+            --light-green: #A8FFBF;
+        }
 
-    .sidebar {
-      width: 250px;
-      background: #1b2a33;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-      overflow-y: auto;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .sidebar h2 {
-      margin-top: 0;
-      font-size: 20px;
-      border-bottom: 1px solid #333;
-      padding-bottom: 10px;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--dark-blue);
+            color: var(--light-green);
+            overflow-x: hidden;
+        }
 
-    .threads {
-      list-style: none;
-      padding: 0;
-    }
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
 
-    .threads li {
-      margin: 10px 0;
-      padding: 8px;
-      background: #2d3e4f;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        .star {
+            position: absolute;
+            background-color: var(--neon-green);
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
 
-    .threads li.active {
-      background: #00c896;
-    }
+        @keyframes twinkle {
+            from { opacity: 0.2; }
+            to { opacity: 1; }
+        }
 
-    .main {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
+        header {
+            background: linear-gradient(to right, var(--dark-blue), var(--royal-blue));
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--bright-blue);
+            box-shadow: 0 0 15px var(--bright-blue);
+        }
 
-    .header {
-      padding: 20px;
-      background: #14222e;
-      border-bottom: 1px solid #222;
-    }
+        header h1 {
+            color: var(--bright-blue);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
 
-    .chat-window {
-      flex-grow: 1;
-      padding: 20px;
-      overflow-y: auto;
-      background: #0f1a22;
-    }
+        .about-section {
+            background-color: rgba(17, 34, 64, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            border: 1px solid var(--bright-blue);
+        }
 
-    .message {
-      margin: 10px 0;
-    }
+        .about-section h2 {
+            color: var(--bright-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-    .message .user {
-      font-weight: bold;
-      color: #00ffe1;
-    }
+        .about-section p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
 
-    .message .text {
-      margin-left: 10px;
-    }
+        .chat-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            height: 60vh;
+            border: 2px solid var(--bright-blue);
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 30px var(--neon-green);
+        }
 
-    .input-area {
-      display: flex;
-      padding: 10px 20px;
-      background: #14222e;
-      border-top: 1px solid #222;
-    }
+        .chat-messages {
+            flex: 3;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--dark-blue);
+        }
 
-    .input-area input, .input-area button {
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-    }
+        .chat-input {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--royal-blue);
+        }
 
-    .input-area input {
-      flex-grow: 1;
-      margin-right: 10px;
-      background: #222;
-      color: white;
-    }
+        .chat-input textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--bright-blue);
+            border-radius: 5px;
+            background-color: var(--dark-blue);
+            color: var(--light-green);
+            margin-bottom: 10px;
+            resize: none;
+        }
 
-    .input-area button {
-      background: #00c896;
-      color: black;
-      cursor: pointer;
-    }
+        .chat-input button {
+            padding: 10px;
+            background-color: var(--bright-blue);
+            color: var(--primary-black);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
 
-    .create-thread {
-      margin-top: 20px;
-    }
+        .chat-input button:hover {
+            background-color: var(--light-green);
+            transform: scale(1.05);
+        }
 
-    .create-thread input {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 8px;
-      background: #222;
-      color: white;
-      border: none;
-      border-radius: 4px;
-    }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: var(--royal-blue);
+            color: var(--bright-blue);
+            border-top: 1px solid var(--bright-blue);
+        }
 
-    .create-thread button {
-      width: 100%;
-      background: #00c896;
-      border: none;
-      padding: 10px;
-      color: black;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
 
-    .no-thread {
-      padding: 20px;
-      text-align: center;
-      color: #888;
-    }
-  </style>
+        .message.sent {
+            background-color: rgba(92, 255, 218, 0.2);
+            margin-left: 30%;
+            border-left: 3px solid var(--bright-blue);
+        }
+
+        .message.received {
+            background-color: rgba(51, 255, 119, 0.2);
+            margin-right: 30%;
+            border-right: 3px solid var(--neon-green);
+        }
+
+        .message .timestamp {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-align: right;
+        }
+
+        .typing-indicator {
+            text-align: center;
+            margin: 10px 0;
+            color: var(--bright-blue);
+        }
+
+        .directory-links {
+            background-color: var(--royal-blue);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .directory-links a {
+            display: inline-block;
+            color: var(--light-green);
+            text-decoration: none;
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid var(--bright-blue);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .directory-links a:hover {
+            background-color: var(--bright-blue);
+            color: var(--primary-black);
+        }
+
+        .info-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--royal-blue);
+            min-width: 250px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+            padding: 15px;
+            border: 1px solid var(--bright-blue);
+        }
+
+        .dropdown-content a {
+            color: var(--light-green);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--bright-blue);
+            color: var(--primary-black);
+        }
+
+        .dropdown-content a svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .info-dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Threads</h2>
-    <ul class="threads" id="threadList"></ul>
-
-    <div class="create-thread">
-      <input type="text" id="newThreadName" placeholder="New thread name...">
-      <button onclick="createThread()">Create Thread</button>
-    </div>
-  </div>
-
-  <div class="main">
-    <div class="header">
-      <h2 id="currentThreadTitle">Select a thread</h2>
-    </div>
-
-    <div class="chat-window" id="chatWindow">
-      <div class="no-thread" id="noThreadMessage">No thread selected</div>
-    </div>
-
-    <div class="input-area">
-      <input type="text" id="username" placeholder="Your name...">
-      <input type="text" id="messageInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter'){sendMessage()}">
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
-  <script>
-    const threads = {};
-    let currentThread = null;
-
-    const threadList = document.getElementById("threadList");
-    const chatWindow = document.getElementById("chatWindow");
-    const currentThreadTitle = document.getElementById("currentThreadTitle");
-    const noThreadMessage = document.getElementById("noThreadMessage");
-
-    function createThread() {
-      const name = document.getElementById("newThreadName").value.trim();
-      if (!name || threads[name]) return alert("Thread name exists or is invalid.");
-      threads[name] = [];
-      const li = document.createElement("li");
-      li.textContent = name;
-      li.onclick = () => selectThread(name, li);
-      threadList.appendChild(li);
-      document.getElementById("newThreadName").value = "";
+    <div class="stars" id="stars"></div>
+    
+    <header>
+        <h1 style="font-family: 'Pacifico', cursive; color: #00FF00; text-shadow: 2px 2px 5px #000000; animation: pulse 2s infinite ease-in-out;">
+  SDK Interactive
+</h1>
+<style>
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
     }
-
-    function selectThread(name, element) {
-      document.querySelectorAll(".threads li").forEach(li => li.classList.remove("active"));
-      element.classList.add("active");
-
-      currentThread = name;
-      currentThreadTitle.textContent = name;
-      noThreadMessage.style.display = "none";
-      renderMessages();
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
     }
-
-    function renderMessages() {
-      chatWindow.innerHTML = "";
-      if (!currentThread || !threads[currentThread]) return;
-      for (const msg of threads[currentThread]) {
-        const div = document.createElement("div");
-        div.className = "message";
-        div.innerHTML = `<span class="user">${msg.user}</span><span class="text">${msg.text}</span>`;
-        chatWindow.appendChild(div);
-      }
-      chatWindow.scrollTop = chatWindow.scrollHeight;
+    100% {
+      transform: scale(1);
+      opacity: 1;
     }
-
-    function sendMessage() {
-      const user = document.getElementById("username").value.trim() || "Anonymous";
-      const text = document.getElementById("messageInput").value.trim();
-      if (!currentThread) return alert("Please select a thread.");
-      if (!text) return;
-
-      threads[currentThread].push({ user, text });
-      document.getElementById("messageInput").value = "";
-      renderMessages();
-    }
-  </script>
+  }
+</style>
+        <p>Automatated Chatroom Expereince</p>
+    </header>
+    
+    <div class="about-section">
+        <h1>Who Are We</h1>
+        <p><strong>SDK Interactive</strong> is a proud upcoming creator of innovative digital experiences. We specialize in connecting communities through immersive, interactive platforms that bring people together in exciting new ways.</p>
+        <p><strong>We</strong> are dedicated to creating engaging spaces where creativity flourishes and connections form. Our mission is to build the next generation of interactive environments that make communication more meaningful and enjoyable.</p>
+        <p><strong>Join Us</strong> as we evolve this digital landscape together with connecting, creating, and collaborating!</p>
+    </div>
+    
+    <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+            <!-- Initial welcome message -->
+            <div class="message received">
+                <div class="message-content">Welcome to SDK Interactive Chatroom!</div>
+                <div class="timestamp">System</div>
+            </div>
+            <div class="message received">
+                <div class="message-content">Type /help to see available commands</div>
+                <div class="timestamp">System</div>
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <textarea id="message-input" placeholder="Type your message here..."></textarea>
+            <button id="send-button">Send Message</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2024 SDK Interactive. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Create stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 2;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random delay for animation
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Chat functionality
+        let nonCommandCount = 0;
+        const MAX_NON_COMMANDS = 3;
+        let responsesStopped = false;
+        
+        document.getElementById('send-button').addEventListener('click', sendMessage);
+        document.getElementById('message-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value.trim();
+            
+            if (message !== '') {
+                const chatMessages = document.getElementById('chat-messages');
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message sent';
+                
+                const time = new Date().toLocaleTimeString();
+                
+                messageElement.innerHTML = `
+                    <div class="message-content">${message}</div>
+                    <div class="timestamp">${time}</div>
+                `;
+                
+                chatMessages.appendChild(messageElement);
+                messageInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Process command
+                if (message.startsWith('/')) {
+                    processCommand(message);
+                    nonCommandCount = 0; // Reset counter on valid command
+                    responsesStopped = false;
+                } else if (!responsesStopped) {
+                    nonCommandCount++;
+                    handleNonCommand(nonCommandCount);
+                }
+            }
+        }
+        
+        function processCommand(command) {
+            const chatMessages = document.getElementById('chat-messages');
+            const time = new Date().toLocaleTimeString();
+            
+            if (command === '/help') {
+                const helpResponse = `
+                    <div class="message received">
+                        <div class="message-content">Available Commands:</div>
+                        <div class="message-content">/help - Show this help message</div>
+                        <div class="message-content">/directory - Show directory links</div>
+                        <div class="message-content">/ping - Get a response from admin</div>
+                        <div class="message-content">/info - Contact and social links</div>
+                        <div class="timestamp">${time}</div>
+                    </div>
+                `;
+                chatMessages.innerHTML += helpResponse;
+            } else if (command === '/directory') {
+                const directoryResponse = `
+                    <div class="message received">
+                        <div class="message-content"><strong>SDK Interactive Directory</strong></div>
+                        <div class="message-content">Home - Community - Members - Chat Room</div>
+                        <div class="timestamp">${time}</div>
+                    </div>
+                `;
+                chatMessages.innerHTML += directoryResponse;
+                
+                // Add directory links after a short delay
+                setTimeout(() => {
+                    const directoryElement = document.createElement('div');
+                    directoryElement.className = 'directory-links';
+                    directoryElement.innerHTML = `
+                        <a href="index.html">Home</a>
+                        <a href="community.html">Community</a>
+                        <a href="members.html">Members</a>
+                        <a href="chat.html">Chat Room</a>
+                    `;
+                    chatMessages.appendChild(directoryElement);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1500);
+            } else if (command === '/ping') {
+                const pingResponse = `
+                    <div class="message received">
+                        <div class="message-content">RESPONSE: Successful, we will have an admin get to you shortly! Thank You!</div>
+                        <div class="timestamp">${time}</div>
+                    </div>
+                `;
+                chatMessages.innerHTML += pingResponse;
+            } else if (command === '/info') {
+                const infoResponse = `
+                    <div class="message received">
+                        <div class="message-content"><strong>Contact Information</strong></div>
+                        <div class="timestamp">${time}</div>
+                    </div>
+                `;
+                chatMessages.innerHTML += infoResponse;
+                
+                // Add info dropdown after a short delay
+                setTimeout(() => {
+                    const infoElement = document.createElement('div');
+                    infoElement.className = 'info-dropdown';
+                    infoElement.innerHTML = `
+                        <a href="#info" class="dropdown-toggle">How to Get In Touch With Us!</a>
+                        <div class="dropdown-content">
+                            <a href="https://discord.gg/75hRp5BhTW" target="_blank">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 16L12 12L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>(JOIN OUR DISCORD)</span>
+                            </a>
+                        </div>
+                    `;
+                    chatMessages.appendChild(infoElement);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1500);
+            } else {
+                sendRandomResponse();
+            }
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function handleNonCommand(count) {
+            const chatMessages = document.getElementById('chat-messages');
+            
+            if (count > MAX_NON_COMMANDS) {
+                // Show typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator';
+                typingIndicator.textContent = 'Typing...';
+                chatMessages.appendChild(typingIndicator);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Final response
+                setTimeout(() => {
+                    chatMessages.removeChild(typingIndicator);
+                    
+                    const finalResponse = document.createElement('div');
+                    finalResponse.className = 'message received';
+                    finalResponse.innerHTML = `
+                        <div class="message-content">Final reminder!</div>
+                        <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+                    `;
+                    chatMessages.appendChild(finalResponse);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // Final message after delay
+                    setTimeout(() => {
+                        const finalMessage = document.createElement('div');
+                        finalMessage.className = 'message received';
+                        finalMessage.innerHTML = `
+                            <div class="message-content">Commands are the best way to interact here. Use /help to explore available options. Thank you!</div>
+                            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+                        `;
+                        chatMessages.appendChild(finalMessage);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        
+                        // Inform user responses are stopped
+                        setTimeout(() => {
+                            const stoppedResponse = document.createElement('div');
+                            stoppedResponse.className = 'message received';
+                            stoppedResponse.innerHTML = `
+                                <div class="message-content">Auto-responses have been stopped. Use any command to restart conversation.</div>
+                                <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+                            `;
+                            chatMessages.appendChild(stoppedResponse);
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                            responsesStopped = true;
+                        }, 3000);
+                        
+                    }, 2000);
+                }, 1000);
+            } else {
+                startConversation(count);
+            }
+        }
+        
+        function startConversation(count) {
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Show typing indicator
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator';
+            typingIndicator.textContent = 'Typing...';
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // First response
+            setTimeout(() => {
+                chatMessages.removeChild(typingIndicator);
+                
+                let firstMessage, secondMessage, thirdMessage;
+                
+                if (count === 1) {
+                    firstMessage = "Hey there!";
+                    secondMessage = "Website admin here!";
+                    thirdMessage = "This chat room is for doing commands! Start with (/help)";
+                } else if (count === 2) {
+                    firstMessage = "Just to let you know...";
+                    secondMessage = "We primarily respond to commands.";
+                    thirdMessage = "Type /help to see what you can do here!";
+                } else if (count === 3) {
+                    firstMessage = "I want to kindly remind you...";
+                    secondMessage = "This platform works best with commands.";
+                    thirdMessage = "Please try the /help command for assistance.";
+                }
+                
+                const firstResponse = document.createElement('div');
+                firstResponse.className = 'message received';
+                firstResponse.innerHTML = `
+                    <div class="message-content">${firstMessage}</div>
+                    <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+                `;
+                chatMessages.appendChild(firstResponse);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Second response
+                setTimeout(() => {
+                    const secondResponse = document.createElement('div');
+                    secondResponse.className = 'message received';
+                    secondResponse.innerHTML = `
+                        <div class="message-content">${secondMessage}</div>
+                        <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+                    `;
+                    chatMessages.appendChild(secondResponse);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // Third response
+                    setTimeout(() => {
+                        const thirdResponse = document.createElement('div');
+                        thirdResponse.className = 'message received';
+                        thirdResponse.innerHTML = `
+                            <div class="message-content">${thirdMessage}</div>
+                            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+                        `;
+                        chatMessages.appendChild(thirdResponse);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 3000);
+                }, 2000);
+            }, 1000);
+        }
+        
+        function sendRandomResponse() {
+            const responses = [
+                "I'm here to assist you!",
+                "How can I help you today?",
+                "Feel free to ask any questions!",
+                "We're here to provide support!",
+                "What brings you to our chatroom?",
+                "Our team is ready to assist you!",
+                "How can we make your experience better?",
+                "What topics would you like to discuss?",
+                "We appreciate your feedback!",
+                "Let's explore what we can do together!"
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            
+            const chatMessages = document.getElementById('chat-messages');
+            const time = new Date().toLocaleTimeString();
+            
+            const responseElement = document.createElement('div');
+            responseElement.className = 'message received';
+            responseElement.innerHTML = `
+                <div class="message-content">${randomResponse}</div>
+                <div class="timestamp">${time}</div>
+            `;
+            
+            chatMessages.appendChild(responseElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Initialize stars when page loads
+        window.addEventListener('DOMContentLoaded', createStars);
+    </script>
 </body>
 </html>
