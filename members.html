@@ -1,578 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDK Interactive</title>
-    <style>
-        /* Base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-        
-        /* Header styles */
-        .top-bar {
-            display: flex;
-            justify-content: flex-end;
-            padding: 8px 5%;
-            background-color: rgba(10, 25, 47, 0.8);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .join-btn {
-            background: transparent;
-            color: #64ffda;
-            border: 2px solid #64ffda;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-        
-        .join-btn:hover {
-            background-color: rgba(100, 255, 218, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
-        }
-        
-        .join-btn::before {
-            content: "🎉";
-            margin-right: 8px;
-        }
-        
-        /* Logo and nav container */
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background-color: rgba(10, 25, 47, 0.9);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent 0%, rgba(100, 255, 218, 0.1) 50%, transparent 100%);
-            transform: skewY(-5deg);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            z-index: 2;
-            transition: transform 0.3s ease;
-        }
-        
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .logo-img {
-            width: 60px;
-            height: 60px;
-            margin-right: 15px;
-            background: linear-gradient(135deg, #64ffda 0%, #0acfb7 100%);
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(100, 255, 218, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); }
-        }
-        
-        .logo-img::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(0deg);
-            width: 70%;
-            height: 70%;
-            border: 2px solid #0a192f;
-            border-radius: 50%;
-            animation: rotate 5s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .logo-text h1 {
-            color: #64ffda;
-            font-size: 32px;
-            margin: 0;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        
-        .logo-text p {
-            color: #8892b0;
-            font-size: 16px;
-            margin: 0;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Navigation styles */
-        nav ul {
-            display: flex;
-            list-style: none;
-            z-index: 2;
-        }
-        
-        nav ul li {
-            margin-left: 30px;
-        }
-        
-        nav ul li a {
-            color: #ccd6f6;
-            text-decoration: none;
-            font-size: 15px;
-            position: relative;
-            padding: 5px 0;
-            transition: color 0.3s ease;
-        }
-        
-        nav ul li a:hover {
-            color: #64ffda;
-        }
-        
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #64ffda;
-            transition: width 0.3s ease;
-        }
-        
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-        
-        .coming-soon {
-            color: #ff6b6b !important;
-            cursor: not-allowed !important;
-        }
-        
-        .coming-soon::after {
-            background-color: #ff6b6b !important;
-        }
-        
-        /* Main content styles */
-        .main-content {
-            display: flex;
-            justify-content: space-between;
-            padding: 60px 5%;
-            flex-wrap: wrap;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .main-content::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(17, 34, 64, 0.7) 100%);
-            z-index: 0;
-        }
-        
-        .services {
-            display: flex;
-            flex-wrap: wrap;
-            width: 70%;
-            z-index: 1;
-        }
-        
-        .service-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 15px;
-            width: calc(33.33% - 30px);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-        
-        .service-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .service-item:hover {
-            transform: translateY(-10px);
-        }
-        
-        .service-icon {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #64ffda 0%, #0acfb7 100%);
-            border-radius: 50%;
-            margin-bottom: 15px;
-            color: #0a192f;
-            font-size: 24px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
-        }
-        
-        .service-item:hover .service-icon {
-            transform: rotate(360deg);
-            box-shadow: 0 8px 20px rgba(100, 255, 218, 0.5);
-        }
-        
-        .service-item p {
-            text-align: center;
-            font-size: 12px;
-            color: #ccd6f6;
-            transition: color 0.3s ease;
-        }
-        
-        .service-item:hover p {
-            color: #64ffda;
-        }
-        
-        .tagline {
-            width: 30%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-left: 50px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .tagline h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #64ffda 0%, #0acfb7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: textGlow 3s infinite alternate;
-        }
-        
-        @keyframes textGlow {
-            from {
-                text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
-            }
-            to {
-                text-shadow: 0 0 20px rgba(100, 255, 218, 0.8), 0 0 30px rgba(100, 255, 218, 0.6);
-            }
-        }
-        
-        .tagline p {
-            color: #64ffda;
-            font-size: 28px;
-            font-style: italic;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        
-        /* Team image */
-        .team-image {
-            width: 100%;
-            padding: 20px 10%;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
-        }
-        
-        .team-image::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(100, 255, 218, 0.1) 10px,
-                rgba(100, 255, 218, 0.1) 20px
-            ),
-            repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 10px,
-                rgba(100, 255, 218, 0.1) 10px,
-                rgba(100, 255, 218, 0.1) 20px
-            );
-        }
-        
-        .game-container {
-            position: relative;
-            z-index: 2;
-            width: 800px;
-            height: 768px;
-            border: 10px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: float 6s ease-in-out infinite;
-            perspective: 1000px;
-            transform-style: preserve-3d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin: 0 auto;
-            flex-direction: column;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotateX(5deg);
-            }
-            50% {
-                transform: translateY(-20px) rotateX(-5deg);
-            }
-            100% {
-                transform: translateY(0) rotateX(5deg);
-            }
-        }
-        
-        .game-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        
-        .game-link:hover {
-            transform: scale(1.02);
-        }
-        
-        .game-link img {
-            max-width: 80%;
-            max-height: 60%;
-            object-fit: contain;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .game-link .game-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #64ffda;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-        
-        .game-link .play-now {
-            font-size: 18px;
-            color: #8892b0;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .game-link:hover .play-now {
-            color: #64ffda;
-        }
-        
-        /* About section */
-        .about {
-            padding: 50px 5%;
-            background-color: #f5f5f5;
-            color: #222;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .about::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaef 100%);
-            z-index: 0;
-        }
-        
-        .about-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-        }
-        
-        .about h2 {
-            font-size: 28px;
-            margin-bottom: 25px;
-            color: #222;
-            font-weight: 600;
-        }
-        
-        .about p {
-            line-height: 1.8;
-            margin-bottom: 20px;
-            font-size: 15px;
-            color: #333;
-        }
-        
-        .discord-link {
-            color: #269b09c2;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-        
-        .discord-link:hover {
-            text-decoration: underline;
-            transform: translateX(5px);
-            color: #19a898;
-        }
-        
-        /* Custom scrollbars */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0a192f;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #64ffda;
-            border-radius: 5px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #0a76cf;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDK Interactive Members</title>
+  <style>
+    :root {
+      --primary-black: #000000;
+      --dark-blue: #0a192f;
+      --royal-blue: #112240;
+      --bright-blue: #64ffda;
+      --neon-green: #33FF77;
+      --light-green: #A8FFBF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--primary-black);
+      background: radial-gradient(circle at top left, var(--dark-blue), var(--primary-black) 40%, var(--royal-blue));
+      color: var(--light-green);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Top Banner */
+    .top-banner {
+      background: linear-gradient(to right, var(--dark-blue), var(--royal-blue));
+      padding: 15px;
+      text-align: center;
+      color: var(--bright-blue);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--bright-blue);
+      box-shadow: 0 0 15px var(--bright-blue);
+    }
+
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 2px solid var(--bright-blue);
+      border-radius: 12px;
+      box-shadow: 0 0 30px var(--neon-green);
+    }
+
+    h1 {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 2rem;
+      color: var(--bright-blue);
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 0 0 10px var(--neon-green);
+    }
+
+    /* Header section */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background-color: rgba(10, 25, 47, 0.9);
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
+      background: linear-gradient(135deg, var(--bright-blue) 0%, #0acfb7 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+    }
+
+    .logo-text h1 {
+      color: var(--bright-blue);
+      font-size: 32px;
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 30px;
+    }
+
+    nav ul li a {
+      color: var(--light-green);
+      text-decoration: none;
+      font-size: 15px;
+      position: relative;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: var(--bright-blue);
+    }
+
+    /* Main content styles */
+    .main-content {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      width: 70%;
+      z-index: 1;
+    }
+
+    .service-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 15px;
+      width: calc(33.33% - 30px);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .service-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-item:hover {
+      transform: translateY(-10px);
+    }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bright-blue) 0%, #0acfb7 100%);
+      border-radius: 50%;
+      margin-bottom: 15px;
+      color: var(--primary-black);
+      font-size: 24px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+    }
+
+    .service-item p {
+      text-align: center;
+      font-size: 12px;
+      color: var(--light-green);
+      transition: color 0.3s ease;
+    }
+
+    .service-item:hover p {
+      color: var(--bright-blue);
+    }
+
+    .tagline {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 50px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tagline h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--bright-blue) 0%, #0acfb7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      animation: textGlow 3s infinite alternate;
+    }
+
+    @keyframes textGlow {
+      from {
+        text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+      }
+      to {
+        text-shadow: 0 0 20px rgba(100, 255, 218, 0.8), 0 0 30px rgba(100, 255, 218, 0.6);
+      }
+    }
+
+    .tagline p {
+      color: var(--bright-blue);
+      font-size: 28px;
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* Team image section */
+    .team-image {
+      width: 100%;
+      padding: 20px 10%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--royal-blue);
+      margin-bottom: 30px;
+    }
+
+    .game-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      border: 10px solid var(--bright-blue);
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: float 6s ease-in-out infinite;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin: 0 auto;
+      flex-direction: column;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotateX(5deg);
+      }
+      50% {
+        transform: translateY(-10px) rotateX(-5deg);
+      }
+      100% {
+        transform: translateY(0) rotateX(5deg);
+      }
+    }
+
+    /* About section */
+    .about {
+      padding: 50px 5%;
+      background-color: rgba(10, 25, 47, 0.7);
+      color: var(--light-green);
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      border: 1px solid var(--bright-blue);
+    }
+
+    .about h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: var(--bright-blue);
+      font-weight: 600;
+    }
+
+    .about p {
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .discord-link {
+      color: var(--bright-blue);
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .discord-link:hover {
+      text-decoration: underline;
+      transform: translateX(5px);
+      color: var(--neon-green);
+    }
+
+    /* Stars in background */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background-color: var(--bright-blue);
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <div class="top-bar">
-        <button class="join-btn" onclick="window.location.href='https://discord.gg/75hRp5BhTW'">Join today!</button>
+  <!-- Stars background -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Top Banner -->
+  <div class="top-banner">
+    Hosted and Server Ran By -Spectrom!
+  </div>
+
+  <!-- Header section -->
+  <div class="header-container">
+    <div class="logo">
+      <div class="logo-img"></div>
+      <div class="logo-text">
+        <h1>SDK Interactive</h1>
+      </div>
     </div>
-    
-    <div class="header-container">
-        <div class="logo">
-            <div class="logo-img"></div>
-            <div class="logo-text">
-                <h1>SDK Interactive</h1>
-                <p>TECHNOLOGIES</p>
-            </div>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#" class="coming-soon">SDK Games</a></li>
-                <li><a href="community.html">About Us</a></li>
-            </ul>
-        </nav>
-    </div>
-    
+    <nav>
+      <ul>
+        <li><a href="#">SDK Games</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main>
     <div class="main-content">
-        <div class="services">
-            <div class="service-item" style="animation-delay: 0.1s">
-                <div class="service-icon">🛡️</div>
-                <p>Discord Server Security</p>
-            </div>
-            
-            <div class="service-item" style="animation-delay: 0.2s">
-                <div class="service-icon">👥</div>
-                <p>Community Management</p>
-            </div>
-            
-            <div class="service-item" style="animation-delay: 0.3s">
-                <div class="service-icon">🔒</div>
-                <p>Role Management System</p>
-            </div>
+      <div class="services">
+        <div class="service-item" style="animation-delay: 0.1s">
+          <div class="service-icon">🛡️</div>
+          <p>Discord Server Security</p>
         </div>
         
-        <div class="tagline">
-            <h2>Forum Based Solutions</h2>
-            <p>Best Discord Iteration Around!</p>
+        <div class="service-item" style="animation-delay: 0.2s">
+          <div class="service-icon">👥</div>
+          <p>Community Management</p>
         </div>
+        
+        <div class="service-item" style="animation-delay: 0.3s">
+          <div class="service-icon">🔒</div>
+          <p>Role Management System</p>
+        </div>
+      </div>
+      
+      <div class="tagline">
+        <h2>Forum Based Solutions</h2>
+        <p>Best Discord Iteration Around!</p>
+      </div>
     </div>
     
     <div class="team-image">
-        <div class="game-container">
-            <a href="https://www.y8.com/games/action_turnip" target="_blank" class="game-link">
-                <img alt="Action Turnip" src="https://img.y8.com/cloud/y8-thumbs/20486/small.jpg" />
-                <div class="game-title">Action Turnip</div>
-                <div class="play-now">Play Now!</div>
-            </a>
-        </div>
+      <div class="game-container">
+        <a href="#" target="_blank" class="game-link">
+          <img alt="Action Turnip" src="https://img.y8.com/cloud/y8-thumbs/20486/small.jpg" style="width: 100%; height: auto; max-height: 300px; object-fit: cover;" />
+          <div class="game-title" style="margin-top: 10px;">Action Turnip</div>
+          <div class="play-now" style="margin-top: 5px;">Play Now!</div>
+        </a>
+      </div>
     </div>
     
     <div class="about">
-        <div class="about-content">
-            <h2>Who is SDK Interactive</h2>
-            <p>SDK Interactive is a forum-based platform that works in relation to Discord. <br> Our interactive system helps users level up by participating in community activities, unlocking exclusive rewards and privileges as they progress. Our platform offers gamified experiences that encourage engagement and build vibrant communities.</p>
-            <p>With features like role management, custom leveling systems,  and community governance tools. <br> SDK Interactive transforms ordinary Discord servers into dynamic, engaging spaces where users feel motivated to contribute and participate. <br> Our goal is to provide the best Discord experience by combining community management tools with gamification elements that keep users coming back.</p>
-            <p>Whether you're managing a gaming community,<br> professional network,<br> or hobby group.<br> SDK Interactive provides the tools you need to foster connection and growth. <a href="https://discord.gg/75hRp5BhTW" class="discord-link">Learn more about our features</a>.</p>
-        </div>
+      <h2>Who is SDK Interactive</h2>
+      <p>SDK Interactive is a forum-based platform that works in relation to Discord. Our interactive system helps users level up by participating in community activities, unlocking exclusive rewards and privileges as they progress. Our platform offers gamified experiences that encourage engagement and build vibrant communities.</p>
+      <p>With features like role management, custom leveling systems, and community governance tools. SDK Interactive transforms ordinary Discord servers into dynamic, engaging spaces where users feel motivated to contribute and participate. Our goal is to provide the best Discord experience by combining community management tools with gamification elements that keep users coming back.</p>
+      <p>Whether you're managing a gaming community, professional network, or hobby group. SDK Interactive provides the tools you need to foster connection and growth. <a href="#" class="discord-link">Learn more about our features</a>.</p>
     </div>
-    
-    <script>
-        // Animation on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const serviceItems = document.querySelectorAll('.service-item');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            serviceItems.forEach(item => {
-                observer.observe(item);
-            });
-            
-            // Add hover effect to logo
-            const logo = document.querySelector('.logo');
-            logo.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.1)';
-            });
-            
-            logo.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
+  </main>
+
+  <script>
+    // Create stars background
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const starCount = 100;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 3;
+        
+        star.style.left = `${x}%`;
+        star.style.top = `${y}%`;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        // Random delay for animation
+        star.style.animationDelay = `${Math.random() * 2}s`;
+        
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Animation on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+      const serviceItems = document.querySelectorAll('.service-item');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
         });
-    </script>
+      }, { threshold: 0.1 });
+      
+      serviceItems.forEach(item => {
+        observer.observe(item);
+      });
+      
+      // Add hover effect to logo
+      const logo = document.querySelector('.logo');
+      logo.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.1)';
+      });
+      
+      logo.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+      });
+      
+      // Create stars when page loads
+      createStars();
+    });
+  </script>
 </body>
 </html>
